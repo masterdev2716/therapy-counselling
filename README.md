@@ -54,14 +54,8 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/f9e95dfc-1811-4c2e-a625-18d2a65a0e74) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
+## Can I connect a custom domain to my Therapy Counselling project?
 
 Yes, you can!
 
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
