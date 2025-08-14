@@ -3,265 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Users, Brain, Heart, Shield, Lightbulb } from "lucide-react";
-
-interface Problem {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  keywords: string[];
-}
-
-interface TherapyRecommendation {
-  type: string;
-  title: string;
-  description: string;
-  benefits: string[];
-  suitableFor: string[];
-}
-
-interface AssessmentQuestion {
-  id: string;
-  question: string;
-  options: {
-    id: string;
-    text: string;
-    weight: Record<string, number>;
-  }[];
-}
-
-const problems: Problem[] = [
-  {
-    id: "anxiety-stress",
-    title: "Anxiety & Stress",
-    description: "Feeling overwhelmed, worried, or experiencing panic attacks",
-    icon: <Shield className="w-6 h-6" />,
-    keywords: ["anxiety", "stress", "panic", "worry", "overwhelmed", "nervous"]
-  },
-  {
-    id: "depression-mood",
-    title: "Depression & Low Mood",
-    description: "Feeling sad, hopeless, or losing interest in activities",
-    icon: <Heart className="w-6 h-6" />,
-    keywords: ["depression", "sad", "hopeless", "low mood", "unmotivated"]
-  },
-  {
-    id: "trauma-ptsd",
-    title: "Trauma & PTSD",
-    description: "Processing past traumatic experiences or difficult memories",
-    icon: <Brain className="w-6 h-6" />,
-    keywords: ["trauma", "ptsd", "flashbacks", "nightmares", "past events"]
-  },
-  {
-    id: "relationships",
-    title: "Relationship Issues",
-    description: "Difficulties with partner, family, or communication problems",
-    icon: <Users className="w-6 h-6" />,
-    keywords: ["relationship", "couple", "marriage", "communication", "conflict"]
-  },
-  {
-    id: "habits-phobias",
-    title: "Habits & Phobias",
-    description: "Breaking unwanted habits, overcoming fears or phobias",
-    icon: <Lightbulb className="w-6 h-6" />,
-    keywords: ["habits", "phobia", "fear", "smoking", "addiction", "compulsive"]
-  },
-  {
-    id: "self-esteem",
-    title: "Self-Esteem & Confidence",
-    description: "Building confidence and improving self-worth",
-    icon: <CheckCircle className="w-6 h-6" />,
-    keywords: ["confidence", "self-esteem", "self-worth", "insecure"]
-  }
-];
-
-const therapyRecommendations: Record<string, TherapyRecommendation> = {
-  "anxiety-stress": {
-    type: "CBT",
-    title: "Cognitive Behavioural Therapy (CBT)",
-    description: "CBT is highly effective for anxiety and stress, helping you identify and change negative thought patterns that contribute to your symptoms.",
-    benefits: [
-      "Learn practical coping strategies",
-      "Identify triggers and thought patterns",
-      "Develop long-term management tools",
-      "Evidence-based approach"
-    ],
-    suitableFor: ["Anxiety disorders", "Stress management", "Panic attacks", "Social anxiety"]
-  },
-  "depression-mood": {
-    type: "Counselling",
-    title: "Counselling",
-    description: "Talk therapy provides a safe space to explore your feelings and develop strategies to improve your mood and outlook on life.",
-    benefits: [
-      "Safe, non-judgmental environment",
-      "Explore underlying causes",
-      "Develop coping strategies",
-      "Improve emotional regulation"
-    ],
-    suitableFor: ["Depression", "Grief", "Life transitions", "Emotional difficulties"]
-  },
-  "trauma-ptsd": {
-    type: "EMDR",
-    title: "Eye Movement Desensitization and Reprocessing (EMDR)",
-    description: "EMDR is specifically designed to help process traumatic memories and reduce their emotional impact on your daily life.",
-    benefits: [
-      "Process traumatic memories safely",
-      "Reduce emotional charge of memories",
-      "No need to discuss details extensively",
-      "Proven effective for PTSD"
-    ],
-    suitableFor: ["PTSD", "Trauma", "Disturbing memories", "Flashbacks"]
-  },
-  "relationships": {
-    type: "Couples Counselling",
-    title: "Couples Counselling",
-    description: "Work together with your partner to improve communication, resolve conflicts, and strengthen your relationship.",
-    benefits: [
-      "Improve communication skills",
-      "Resolve ongoing conflicts",
-      "Strengthen emotional connection",
-      "Learn healthy relationship patterns"
-    ],
-    suitableFor: ["Relationship conflicts", "Communication issues", "Trust problems", "Life transitions"]
-  },
-  "habits-phobias": {
-    type: "Hypnotherapy",
-    title: "Hypnotherapy",
-    description: "Use the power of your subconscious mind to break unwanted habits and overcome phobias through deep relaxation and suggestion.",
-    benefits: [
-      "Access subconscious patterns",
-      "Deep relaxation techniques",
-      "Break automatic behaviors",
-      "Overcome limiting beliefs"
-    ],
-    suitableFor: ["Smoking cessation", "Weight management", "Phobias", "Unwanted habits"]
-  },
-  "self-esteem": {
-    type: "CBT",
-    title: "Cognitive Behavioural Therapy (CBT)",
-    description: "CBT helps identify negative self-talk and limiting beliefs, replacing them with more balanced and positive thought patterns.",
-    benefits: [
-      "Challenge negative self-talk",
-      "Build self-confidence",
-      "Develop positive coping strategies",
-      "Improve self-awareness"
-    ],
-    suitableFor: ["Low self-esteem", "Confidence issues", "Self-criticism", "Social anxiety"]
-  }
-};
-
-const assessmentQuestions: AssessmentQuestion[] = [
-  {
-    id: "relationship_status",
-    question: "What is your current relationship status?",
-    options: [
-      { 
-        id: "single", 
-        text: "Single", 
-        weight: { "CBT": 1, "Counselling": 1, "EMDR": 1, "Hypnotherapy": 1, "Couples Counselling": 0 }
-      },
-      { 
-        id: "relationship", 
-        text: "In a relationship/married", 
-        weight: { "CBT": 1, "Counselling": 1, "EMDR": 1, "Hypnotherapy": 1, "Couples Counselling": 2 }
-      },
-      { 
-        id: "complicated", 
-        text: "It's complicated", 
-        weight: { "CBT": 1, "Counselling": 1, "EMDR": 1, "Hypnotherapy": 1, "Couples Counselling": 3 }
-      }
-    ]
-  },
-  {
-    id: "severity",
-    question: "How would you describe the impact of your concerns on your daily life?",
-    options: [
-      { 
-        id: "mild", 
-        text: "Mild - Occasional difficulty, but I can usually manage", 
-        weight: { "CBT": 2, "Counselling": 3, "EMDR": 1, "Hypnotherapy": 2, "Couples Counselling": 0 }
-      },
-      { 
-        id: "moderate", 
-        text: "Moderate - Regular challenges that affect my work or relationships", 
-        weight: { "CBT": 3, "Counselling": 3, "EMDR": 2, "Hypnotherapy": 2, "Couples Counselling": 1 }
-      },
-      { 
-        id: "severe", 
-        text: "Severe - Significant disruption to most areas of my life", 
-        weight: { "CBT": 2, "Counselling": 4, "EMDR": 3, "Hypnotherapy": 1, "Couples Counselling": 0 }
-      }
-    ]
-  },
-  {
-    id: "duration",
-    question: "How long have you been experiencing these concerns?",
-    options: [
-      { 
-        id: "recent", 
-        text: "Recent - A few weeks to a few months", 
-        weight: { "CBT": 3, "Counselling": 3, "EMDR": 1, "Hypnotherapy": 2, "Couples Counselling": 2 }
-      },
-      { 
-        id: "ongoing", 
-        text: "Ongoing - Several months to a year", 
-        weight: { "CBT": 3, "Counselling": 2, "EMDR": 2, "Hypnotherapy": 3, "Couples Counselling": 2 }
-      },
-      { 
-        id: "longterm", 
-        text: "Long-term - More than a year", 
-        weight: { "CBT": 2, "Counselling": 3, "EMDR": 3, "Hypnotherapy": 2, "Couples Counselling": 3 }
-      }
-    ]
-  },
-  {
-    id: "preference",
-    question: "What type of approach appeals to you most?",
-    options: [
-      { 
-        id: "talking", 
-        text: "Talking through my thoughts and feelings", 
-        weight: { "CBT": 2, "Counselling": 4, "EMDR": 1, "Hypnotherapy": 1, "Couples Counselling": 0 }
-      },
-      { 
-        id: "practical", 
-        text: "Learning practical techniques and strategies", 
-        weight: { "CBT": 4, "Counselling": 2, "EMDR": 2, "Hypnotherapy": 3, "Couples Counselling": 0 }
-      },
-      { 
-        id: "body-mind", 
-        text: "Working with the mind-body connection", 
-        weight: { "CBT": 1, "Counselling": 1, "EMDR": 4, "Hypnotherapy": 4, "Couples Counselling": 0 }
-      },
-      { 
-        id: "together", 
-        text: "Working with my partner to improve our relationship", 
-        weight: { "CBT": 1, "Counselling": 1, "EMDR": 1, "Hypnotherapy": 1, "Couples Counselling": 4 }
-      }
-    ]
-  },
-  {
-    id: "past_trauma",
-    question: "Do you have specific traumatic memories or past events that still affect you?",
-    options: [
-      { 
-        id: "yes_specific", 
-        text: "Yes, specific traumatic events that I can identify", 
-        weight: { "CBT": 1, "Counselling": 2, "EMDR": 4, "Hypnotherapy": 2, "Couples Counselling": 0 }
-      },
-      { 
-        id: "yes_unclear", 
-        text: "Yes, but I'm not sure exactly what or when", 
-        weight: { "CBT": 2, "Counselling": 3, "EMDR": 3, "Hypnotherapy": 2, "Couples Counselling": 0 }
-      },
-      { 
-        id: "no", 
-        text: "No, my concerns are not related to past trauma", 
-        weight: { "CBT": 3, "Counselling": 2, "EMDR": 1, "Hypnotherapy": 3, "Couples Counselling": 0 }
-      }
-    ]
-  }
-];
+import { getWebsiteUrl, getCountryFlag } from "@/components/therapy/utils";
+import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions } from "@/components/therapy/constants";
+import { countries } from "@/components/therapy/countries";
+import type { TherapyRecommendation } from "@/types/therapy";
 
 export default function TherapyPathfinder() {
   const [currentStep, setCurrentStep] = useState<'welcome' | 'demographics' | 'problems' | 'questions' | 'results'>('welcome');
@@ -271,29 +16,6 @@ export default function TherapyPathfinder() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendation, setRecommendation] = useState<TherapyRecommendation | null>(null);
   const [showCountryDropdown, setShowCountryDropdown] = useState(false);
-
-  // List of countries for the dropdown
-  const countries = [
-    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Austria", "Azerbaijan",
-    "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
-    "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde",
-    "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba",
-    "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt",
-    "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
-    "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
-    "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
-    "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
-    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
-    "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
-    "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
-    "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
-    "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
-    "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal",
-    "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea",
-    "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
-    "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda",
-    "Ukraine", "United Arab Emirates", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
-  ];
 
   const handleProblemToggle = (problemId: string) => {
     setSelectedProblems(prev => 
@@ -305,6 +27,51 @@ export default function TherapyPathfinder() {
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answerId }));
+  };
+
+  const calculateRecommendation = () => {
+    const therapyScores: Record<string, number> = {
+      "CBT": 0,
+      "Counselling": 0,
+      "EMDR": 0,
+      "Hypnotherapy": 0,
+      "Couples Counselling": 0
+    };
+
+    selectedProblems.forEach(problemId => {
+      const problemRec = therapyRecommendations[problemId];
+      if (problemRec) {
+        therapyScores[problemRec.type] += 3;
+      }
+    });
+
+    Object.entries(answers).forEach(([questionId, answerId]) => {
+      const question = assessmentQuestions.find(q => q.id === questionId);
+      const selectedOption = question?.options.find(o => o.id === answerId);
+      if (selectedOption) {
+        Object.entries(selectedOption.weight).forEach(([therapy, weight]) => {
+          therapyScores[therapy] += weight;
+        });
+      }
+    });
+
+    const relationshipStatus = answers.relationship_status;
+    const wantsToWorkTogether = answers.preference === 'together';
+    const hasRelationshipProblems = selectedProblems.includes('relationships');
+    if (!hasRelationshipProblems && (relationshipStatus === 'single' || !wantsToWorkTogether)) {
+      therapyScores["Couples Counselling"] = 0;
+    }
+
+    const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) =>
+      score > max.score ? { therapy, score } : max,
+      { therapy: "CBT", score: 0 }
+    );
+
+    const rec = Object.values(therapyRecommendations).find(r => r.type === recommendedTherapy.therapy);
+    if (rec) {
+      setRecommendation(rec);
+      setCurrentStep('results');
+    }
   };
 
   const nextQuestion = () => {
@@ -323,110 +90,6 @@ export default function TherapyPathfinder() {
     }
   };
 
-  const calculateRecommendation = () => {
-    const therapyScores: Record<string, number> = {
-      "CBT": 0,
-      "Counselling": 0,
-      "EMDR": 0,
-      "Hypnotherapy": 0,
-      "Couples Counselling": 0
-    };
-
-    // Add points based on selected problems
-    selectedProblems.forEach(problemId => {
-      const problemRec = therapyRecommendations[problemId];
-      if (problemRec) {
-        therapyScores[problemRec.type] += 3;
-      }
-    });
-
-    // Add points based on assessment answers
-    Object.entries(answers).forEach(([questionId, answerId]) => {
-      const question = assessmentQuestions.find(q => q.id === questionId);
-      const selectedOption = question?.options.find(o => o.id === answerId);
-      
-      if (selectedOption) {
-        Object.entries(selectedOption.weight).forEach(([therapy, weight]) => {
-          therapyScores[therapy] += weight;
-        });
-      }
-    });
-
-    // Special logic for couples counselling - only recommend if:
-    // 1. User selected relationship problems OR
-    // 2. User is in a relationship AND wants to work together
-    const relationshipStatus = answers.relationship_status;
-    const wantsToWorkTogether = answers.preference === 'together';
-    const hasRelationshipProblems = selectedProblems.includes('relationships');
-    
-    if (!hasRelationshipProblems && (relationshipStatus === 'single' || !wantsToWorkTogether)) {
-      therapyScores["Couples Counselling"] = 0; // Exclude couples counselling
-    }
-
-    // Find the therapy with the highest score
-    const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) => 
-      score > max.score ? { therapy, score } : max, 
-      { therapy: "CBT", score: 0 }
-    );
-
-    // Create recommendation based on highest scoring therapy
-    const rec = Object.values(therapyRecommendations).find(r => r.type === recommendedTherapy.therapy);
-    
-    if (rec) {
-      setRecommendation(rec);
-      setCurrentStep('results');
-    }
-  };
-
-  const demographicsQuestions = [
-    {
-      id: "country",
-      question: "Which country are you currently in?",
-      options: [
-        { id: "uk", text: "🇬🇧 England" },
-        { id: "us", text: "🇺🇸 US" },
-        { id: "canada", text: "🇨🇦 Canada" },
-        { id: "australia", text: "🇦🇺 Australia" },
-        { id: "other", text: "🌍 Other" }
-      ]
-    },
-    {
-      id: "gender",
-      question: "What is your gender identity?",
-      options: [
-        { id: "woman", text: "Woman" },
-        { id: "man", text: "Man" },
-        // { id: "non-binary", text: "Non-binary" },
-        // { id: "transgender", text: "Transgender" },
-        // { id: "prefer-not", text: "Prefer not to say" }
-      ]
-    },
-    {
-      id: "age",
-      question: "How old are you?",
-      options: [
-        { id: "-18", text: "-18 years" },
-        { id: "18-24", text: "18-24 years" },
-        { id: "25-34", text: "25-34 years" },
-        { id: "35-44", text: "35-44 years" },
-        { id: "45-54", text: "45-54 years" },
-        { id: "55-64", text: "55-64 years" },
-        { id: "65+", text: "65+ years" }
-      ]
-    }
-  ];
-
-  const getWebsiteUrl = (therapyType: string) => {
-    const urlMap: Record<string, string> = {
-      "Counselling": "https://www.oliptherapy.co.uk/counselling",
-      "Couples Counselling": "https://www.oliptherapy.co.uk/couples-counselling",
-      "EMDR": "https://www.oliptherapy.co.uk/emdr",
-      "Hypnotherapy": "https://www.oliptherapy.co.uk/hypnotherapy",
-      "CBT": "https://www.oliptherapy.co.uk/cbtpage"
-    };
-    return urlMap[therapyType] || "https://www.oliptherapy.co.uk";
-  };
-
   const handleVisitWebsite = () => {
     if (recommendation) {
       const url = getWebsiteUrl(recommendation.type);
@@ -435,26 +98,26 @@ export default function TherapyPathfinder() {
   };
 
   const handleContactUs = () => {
-    const url = "https://www.oliptherapy.co.uk/contact"
+    const url = "https://www.oliptherapy.co.uk/contact";
     window.open(url, '_self');
-  }
+  };
 
   if (currentStep === 'welcome') {
     return (
       <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
         <Card className="max-w-2xl w-full shadow-card">
-                      <CardHeader className="text-center pb-8">
-              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                <Brain className="w-8 h-8 text-white" />
-              </div>
-              <CardTitle className="text-4xl font-bold text-foreground mb-4">
-                Find Your Perfect Therapy Match
-              </CardTitle>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-                Feeling overwhelmed by therapy options? Take our gentle 2-minute assessment and discover 
-                the therapy approach that's right for you. Your journey to healing starts here. ✨
-              </p>
-            </CardHeader>
+          <CardHeader className="text-center pb-8">
+            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+              <Brain className="w-8 h-8 text-white" />
+            </div>
+            <CardTitle className="text-4xl font-bold text-foreground mb-4">
+              Find Your Perfect Therapy Match
+            </CardTitle>
+            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+              Feeling overwhelmed by therapy options? Take our gentle 2-minute assessment and discover 
+              the therapy approach that's right for you. Your journey to healing starts here. ✨
+            </p>
+          </CardHeader>
           <CardContent className="text-center">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
               <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
@@ -513,8 +176,6 @@ export default function TherapyPathfinder() {
 
     const handleDemoAnswerSelect = (questionId: string, answerId: string) => {
       setAnswers(prev => ({ ...prev, [questionId]: answerId }));
-      
-      // Show country dropdown if "Other" is selected
       if (questionId === "country" && answerId === "other") {
         setShowCountryDropdown(true);
       } else if (questionId === "country") {
@@ -525,190 +186,6 @@ export default function TherapyPathfinder() {
     const handleCountrySelect = (country: string) => {
       setAnswers(prev => ({ ...prev, country: country }));
       setShowCountryDropdown(false);
-    };
-
-    // Function to get country flag emoji
-    const getCountryFlag = (countryName: string) => {
-      const flagMap: Record<string, string> = {
-        "Ukraine": "🇺🇦",
-        "United States": "🇺🇸",
-        "United Kingdom": "🇬🇧",
-        "Canada": "🇨🇦",
-        "Australia": "🇦🇺",
-        "Germany": "🇩🇪",
-        "France": "🇫🇷",
-        "Italy": "🇮🇹",
-        "Spain": "🇪🇸",
-        "Netherlands": "🇳🇱",
-        "Belgium": "🇧🇪",
-        "Switzerland": "🇨🇭",
-        "Austria": "🇦🇹",
-        "Sweden": "🇸🇪",
-        "Norway": "🇳🇴",
-        "Denmark": "🇩🇰",
-        "Finland": "🇫🇮",
-        "Poland": "🇵🇱",
-        "Czech Republic": "🇨🇿",
-        "Slovakia": "🇸🇰",
-        "Hungary": "🇭🇺",
-        "Romania": "🇷🇴",
-        "Bulgaria": "🇧🇬",
-        "Croatia": "🇭🇷",
-        "Slovenia": "🇸🇮",
-        "Estonia": "🇪🇪",
-        "Latvia": "🇱🇻",
-        "Lithuania": "🇱🇹",
-        "Ireland": "🇮🇪",
-        "Portugal": "🇵🇹",
-        "Greece": "🇬🇷",
-        "Cyprus": "🇨🇾",
-        "Malta": "🇲🇹",
-        "Luxembourg": "🇱🇺",
-        "Iceland": "🇮🇸",
-        "New Zealand": "🇳🇿",
-        "Japan": "🇯🇵",
-        "South Korea": "🇰🇷",
-        "China": "🇨🇳",
-        "India": "🇮🇳",
-        "Brazil": "🇧🇷",
-        "Argentina": "🇦🇷",
-        "Mexico": "🇲🇽",
-        "Chile": "🇨🇱",
-        "Peru": "🇵🇪",
-        "Colombia": "🇨🇴",
-        "Venezuela": "🇻🇪",
-        "Ecuador": "🇪🇨",
-        "Uruguay": "🇺🇾",
-        "Paraguay": "🇵🇾",
-        "Bolivia": "🇧🇴",
-        "Guyana": "🇬🇾",
-        "Suriname": "🇸🇷",
-        "French Guiana": "🇬🇫",
-        "South Africa": "🇿🇦",
-        "Egypt": "🇪🇬",
-        "Nigeria": "🇳🇬",
-        "Kenya": "🇰🇪",
-        "Ethiopia": "🇪🇹",
-        "Morocco": "🇲🇦",
-        "Algeria": "🇩🇿",
-        "Tunisia": "🇹🇳",
-        "Libya": "🇱🇾",
-        "Sudan": "🇸🇩",
-        "Somalia": "🇸🇴",
-        "Djibouti": "🇩🇯",
-        "Eritrea": "🇪🇷",
-        "Chad": "🇹🇩",
-        "Niger": "🇳🇪",
-        "Mali": "🇲🇱",
-        "Burkina Faso": "🇧🇫",
-        "Senegal": "🇸🇳",
-        "Gambia": "🇬🇲",
-        "Guinea-Bissau": "🇬🇼",
-        "Guinea": "🇬🇳",
-        "Sierra Leone": "🇸🇱",
-        "Liberia": "🇱🇷",
-        "Ivory Coast": "🇨🇮",
-        "Ghana": "🇬🇭",
-        "Togo": "🇹🇬",
-        "Benin": "🇧🇯",
-        "Cameroon": "🇨🇲",
-        "Central African Republic": "🇨🇫",
-        "Gabon": "🇬🇦",
-        "Congo": "🇨🇬",
-        "Democratic Republic of the Congo": "🇨🇩",
-        "Angola": "🇦🇴",
-        "Zambia": "🇿🇲",
-        "Zimbabwe": "🇿🇼",
-        "Botswana": "🇧🇼",
-        "Namibia": "🇳🇦",
-        "Lesotho": "🇱🇸",
-        "Eswatini": "🇸🇿",
-        "Madagascar": "🇲🇬",
-        "Mauritius": "🇲🇺",
-        "Seychelles": "🇸🇨",
-        "Comoros": "🇰🇲",
-        "Cape Verde": "🇨🇻",
-        "Sao Tome and Principe": "🇸🇹",
-        "Equatorial Guinea": "🇬🇶",
-        "Rwanda": "🇷🇼",
-        "Burundi": "🇧🇮",
-        "Tanzania": "🇹🇿",
-        "Uganda": "🇺🇬",
-        "Malawi": "🇲🇼",
-        "Mozambique": "🇲🇿",
-        "Russia": "🇷🇺",
-        "Belarus": "🇧🇾",
-        "Moldova": "🇲🇩",
-        "Georgia": "🇬🇪",
-        "Armenia": "🇦🇲",
-        "Azerbaijan": "🇦🇿",
-        "Kazakhstan": "🇰🇿",
-        "Uzbekistan": "🇺🇿",
-        "Turkmenistan": "🇹🇲",
-        "Kyrgyzstan": "🇰🇬",
-        "Tajikistan": "🇹🇯",
-        "Afghanistan": "🇦🇫",
-        "Pakistan": "🇵🇰",
-        "Nepal": "🇳🇵",
-        "Bhutan": "🇧🇹",
-        "Bangladesh": "🇧🇩",
-        "Sri Lanka": "🇱🇰",
-        "Maldives": "🇲🇻",
-        "Myanmar": "🇲🇲",
-        "Thailand": "🇹🇭",
-        "Laos": "🇱🇦",
-        "Cambodia": "🇰🇭",
-        "Vietnam": "🇻🇳",
-        "Malaysia": "🇲🇾",
-        "Singapore": "🇸🇬",
-        "Brunei": "🇧🇳",
-        "Philippines": "🇵🇭",
-        "Indonesia": "🇮🇩",
-        "East Timor": "🇹🇱",
-        "Papua New Guinea": "🇵🇬",
-        "Fiji": "🇫🇯",
-        "Vanuatu": "🇻🇺",
-        "New Caledonia": "🇳🇨",
-        "Solomon Islands": "🇸🇧",
-        "Kiribati": "🇰🇮",
-        "Tuvalu": "🇹🇻",
-        "Nauru": "🇳🇷",
-        "Palau": "🇵🇼",
-        "Marshall Islands": "🇲🇭",
-        "Micronesia": "🇫🇲",
-        "Samoa": "🇼🇸",
-        "Tonga": "🇹🇴",
-        "Cook Islands": "🇨🇰",
-        "Niue": "🇳🇺",
-        "Tokelau": "🇹🇰",
-        "Israel": "🇮🇱",
-        "Palestine": "🇵🇸",
-        "Jordan": "🇯🇴",
-        "Lebanon": "🇱🇧",
-        "Syria": "🇸🇾",
-        "Iraq": "🇮🇶",
-        "Iran": "🇮🇷",
-        "Kuwait": "🇰🇼",
-        "Saudi Arabia": "🇸🇦",
-        "Yemen": "🇾🇪",
-        "Oman": "🇴🇲",
-        "United Arab Emirates": "🇦🇪",
-        "Qatar": "🇶🇦",
-        "Bahrain": "🇧🇭",
-        "Turkey": "🇹🇷",
-        "Albania": "🇦🇱",
-        "North Macedonia": "🇲🇰",
-        "Kosovo": "🇽🇰",
-        "Serbia": "🇷🇸",
-        "Montenegro": "🇲🇪",
-        "Bosnia and Herzegovina": "🇧🇦",
-        "Liechtenstein": "🇱🇮",
-        "Monaco": "🇲🇨",
-        "Andorra": "🇦🇩",
-        "San Marino": "🇸🇲",
-        "Vatican City": "🇻🇦"
-      };
-      return flagMap[countryName] || "🌍";
     };
 
     const nextDemoQuestion = () => {
@@ -755,13 +232,12 @@ export default function TherapyPathfinder() {
             </CardHeader>
             <CardContent className="space-y-3">
               {currentDemoQuestion.options.map((option) => {
-                // For country question, show selected country with flag if "other" was selected
                 let displayText = option.text;
                 if (currentDemoQuestion.id === "country" && option.id === "other" && answers.country && answers.country !== "other") {
                   const flag = getCountryFlag(answers.country);
                   displayText = `${flag} ${answers.country}`;
                 }
-                
+
                 return (
                   <Card 
                     key={option.id}
@@ -789,8 +265,7 @@ export default function TherapyPathfinder() {
                   </Card>
                 );
               })}
-              
-              {/* Country Dropdown for "Other" selection */}
+
               {currentDemoQuestion.id === "country" && showCountryDropdown && (
                 <div className="mt-4 p-4 border border-primary/20 rounded-lg bg-accent/30">
                   <h4 className="font-medium text-foreground mb-3">Please select your country:</h4>
@@ -847,7 +322,7 @@ export default function TherapyPathfinder() {
               We're here to help you find the right support. Select all the areas that resonate with you - 
               there's no right or wrong answer. Your journey to healing is unique. 💙
             </p>
-            <div className="flex items-center justify-center space-x-4 mt-6 text-sm text-muted-foreground">
+            <div className="flex items:center justify-center space-x-4 mt-6 text-sm text-muted-foreground">
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
                 Choose multiple options
