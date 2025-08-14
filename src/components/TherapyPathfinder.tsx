@@ -270,6 +270,30 @@ export default function TherapyPathfinder() {
   const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendation, setRecommendation] = useState<TherapyRecommendation | null>(null);
+  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
+
+  // List of countries for the dropdown
+  const countries = [
+    "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Austria", "Azerbaijan",
+    "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia",
+    "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Cape Verde",
+    "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba",
+    "Cyprus", "Czech Republic", "Democratic Republic of the Congo", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt",
+    "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon",
+    "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana",
+    "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel",
+    "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan",
+    "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar",
+    "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia",
+    "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal",
+    "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan",
+    "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania",
+    "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal",
+    "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea",
+    "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+    "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda",
+    "Ukraine", "United Arab Emirates", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+  ];
 
   const handleProblemToggle = (problemId: string) => {
     setSelectedProblems(prev => 
@@ -419,50 +443,62 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
         <Card className="max-w-2xl w-full shadow-card">
-          <CardHeader className="text-center pb-8">
-            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-8 h-8 text-white" />
-            </div>
-            <CardTitle className="text-3xl font-bold text-foreground mb-4">
-              Therapy Counselling
-            </CardTitle>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              Not sure which therapy approach is right for you? Our quick assessment will help match you 
-              with the most suitable therapy based on your specific needs and concerns.
-            </p>
-          </CardHeader>
+                      <CardHeader className="text-center pb-8">
+              <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                <Brain className="w-8 h-8 text-white" />
+              </div>
+              <CardTitle className="text-4xl font-bold text-foreground mb-4">
+                Find Your Perfect Therapy Match
+              </CardTitle>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+                Feeling overwhelmed by therapy options? Take our gentle 2-minute assessment and discover 
+                the therapy approach that's right for you. Your journey to healing starts here. ✨
+              </p>
+            </CardHeader>
           <CardContent className="text-center">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-              <div className="flex flex-col items-center p-4 border-2 border-primary rounded-lg">
-                <Users className="w-8 h-8 text-primary mb-2" />
-                <span className="text-sm font-medium">Counselling</span>
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                <Users className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-primary">Counselling</span>
+                <span className="text-xs text-muted-foreground text-center mt-1">Talk Therapy</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary rounded-lg">
-                <Heart className="w-8 h-8 text-primary mb-2" />
-                <span className="text-sm font-medium">Couples Therapy</span>
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-pink-50 to-pink-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                <Heart className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-primary">Couples Therapy</span>
+                <span className="text-xs text-muted-foreground text-center mt-1">Relationship Healing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary rounded-lg">
-                <Brain className="w-8 h-8 text-primary mb-2" />
-                <span className="text-sm font-medium">EMDR</span>
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                <Brain className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-primary">EMDR</span>
+                <span className="text-xs text-muted-foreground text-center mt-1">Trauma Processing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary rounded-lg">
-                <Lightbulb className="w-8 h-8 text-primary mb-2" />
-                <span className="text-sm font-medium">Hypnotherapy</span>
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-yellow-50 to-yellow-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                <Lightbulb className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-primary">Hypnotherapy</span>
+                <span className="text-xs text-muted-foreground text-center mt-1">Subconscious Healing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary rounded-lg">
-                <CheckCircle className="w-8 h-8 text-primary mb-2" />
-                <span className="text-sm font-medium">CBT</span>
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                <CheckCircle className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                <span className="text-sm font-semibold text-primary">CBT</span>
+                <span className="text-xs text-muted-foreground text-center mt-1">Thought Patterns</span>
               </div>
             </div>
             <Button 
               onClick={() => setCurrentStep('demographics')}
-              className="bg-gradient-primary hover:bg-primary-hover text-white px-8 py-3 text-lg font-semibold shadow-soft"
+              className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              Start Assessment
+              Begin Your Journey
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-            <p className="text-sm text-muted-foreground mt-4">
-              Takes less than 2 minutes • Completely confidential
+            <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
+              <span className="flex items-center">
+                <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                Takes less than 2 minutes
+              </span>
+              <span className="flex items-center">
+                <Shield className="w-4 h-4 text-blue-500 mr-1" />
+                Completely confidential
+              </span>
             </p>
           </CardContent>
         </Card>
@@ -477,6 +513,202 @@ export default function TherapyPathfinder() {
 
     const handleDemoAnswerSelect = (questionId: string, answerId: string) => {
       setAnswers(prev => ({ ...prev, [questionId]: answerId }));
+      
+      // Show country dropdown if "Other" is selected
+      if (questionId === "country" && answerId === "other") {
+        setShowCountryDropdown(true);
+      } else if (questionId === "country") {
+        setShowCountryDropdown(false);
+      }
+    };
+
+    const handleCountrySelect = (country: string) => {
+      setAnswers(prev => ({ ...prev, country: country }));
+      setShowCountryDropdown(false);
+    };
+
+    // Function to get country flag emoji
+    const getCountryFlag = (countryName: string) => {
+      const flagMap: Record<string, string> = {
+        "Ukraine": "🇺🇦",
+        "United States": "🇺🇸",
+        "United Kingdom": "🇬🇧",
+        "Canada": "🇨🇦",
+        "Australia": "🇦🇺",
+        "Germany": "🇩🇪",
+        "France": "🇫🇷",
+        "Italy": "🇮🇹",
+        "Spain": "🇪🇸",
+        "Netherlands": "🇳🇱",
+        "Belgium": "🇧🇪",
+        "Switzerland": "🇨🇭",
+        "Austria": "🇦🇹",
+        "Sweden": "🇸🇪",
+        "Norway": "🇳🇴",
+        "Denmark": "🇩🇰",
+        "Finland": "🇫🇮",
+        "Poland": "🇵🇱",
+        "Czech Republic": "🇨🇿",
+        "Slovakia": "🇸🇰",
+        "Hungary": "🇭🇺",
+        "Romania": "🇷🇴",
+        "Bulgaria": "🇧🇬",
+        "Croatia": "🇭🇷",
+        "Slovenia": "🇸🇮",
+        "Estonia": "🇪🇪",
+        "Latvia": "🇱🇻",
+        "Lithuania": "🇱🇹",
+        "Ireland": "🇮🇪",
+        "Portugal": "🇵🇹",
+        "Greece": "🇬🇷",
+        "Cyprus": "🇨🇾",
+        "Malta": "🇲🇹",
+        "Luxembourg": "🇱🇺",
+        "Iceland": "🇮🇸",
+        "New Zealand": "🇳🇿",
+        "Japan": "🇯🇵",
+        "South Korea": "🇰🇷",
+        "China": "🇨🇳",
+        "India": "🇮🇳",
+        "Brazil": "🇧🇷",
+        "Argentina": "🇦🇷",
+        "Mexico": "🇲🇽",
+        "Chile": "🇨🇱",
+        "Peru": "🇵🇪",
+        "Colombia": "🇨🇴",
+        "Venezuela": "🇻🇪",
+        "Ecuador": "🇪🇨",
+        "Uruguay": "🇺🇾",
+        "Paraguay": "🇵🇾",
+        "Bolivia": "🇧🇴",
+        "Guyana": "🇬🇾",
+        "Suriname": "🇸🇷",
+        "French Guiana": "🇬🇫",
+        "South Africa": "🇿🇦",
+        "Egypt": "🇪🇬",
+        "Nigeria": "🇳🇬",
+        "Kenya": "🇰🇪",
+        "Ethiopia": "🇪🇹",
+        "Morocco": "🇲🇦",
+        "Algeria": "🇩🇿",
+        "Tunisia": "🇹🇳",
+        "Libya": "🇱🇾",
+        "Sudan": "🇸🇩",
+        "Somalia": "🇸🇴",
+        "Djibouti": "🇩🇯",
+        "Eritrea": "🇪🇷",
+        "Chad": "🇹🇩",
+        "Niger": "🇳🇪",
+        "Mali": "🇲🇱",
+        "Burkina Faso": "🇧🇫",
+        "Senegal": "🇸🇳",
+        "Gambia": "🇬🇲",
+        "Guinea-Bissau": "🇬🇼",
+        "Guinea": "🇬🇳",
+        "Sierra Leone": "🇸🇱",
+        "Liberia": "🇱🇷",
+        "Ivory Coast": "🇨🇮",
+        "Ghana": "🇬🇭",
+        "Togo": "🇹🇬",
+        "Benin": "🇧🇯",
+        "Cameroon": "🇨🇲",
+        "Central African Republic": "🇨🇫",
+        "Gabon": "🇬🇦",
+        "Congo": "🇨🇬",
+        "Democratic Republic of the Congo": "🇨🇩",
+        "Angola": "🇦🇴",
+        "Zambia": "🇿🇲",
+        "Zimbabwe": "🇿🇼",
+        "Botswana": "🇧🇼",
+        "Namibia": "🇳🇦",
+        "Lesotho": "🇱🇸",
+        "Eswatini": "🇸🇿",
+        "Madagascar": "🇲🇬",
+        "Mauritius": "🇲🇺",
+        "Seychelles": "🇸🇨",
+        "Comoros": "🇰🇲",
+        "Cape Verde": "🇨🇻",
+        "Sao Tome and Principe": "🇸🇹",
+        "Equatorial Guinea": "🇬🇶",
+        "Rwanda": "🇷🇼",
+        "Burundi": "🇧🇮",
+        "Tanzania": "🇹🇿",
+        "Uganda": "🇺🇬",
+        "Malawi": "🇲🇼",
+        "Mozambique": "🇲🇿",
+        "Russia": "🇷🇺",
+        "Belarus": "🇧🇾",
+        "Moldova": "🇲🇩",
+        "Georgia": "🇬🇪",
+        "Armenia": "🇦🇲",
+        "Azerbaijan": "🇦🇿",
+        "Kazakhstan": "🇰🇿",
+        "Uzbekistan": "🇺🇿",
+        "Turkmenistan": "🇹🇲",
+        "Kyrgyzstan": "🇰🇬",
+        "Tajikistan": "🇹🇯",
+        "Afghanistan": "🇦🇫",
+        "Pakistan": "🇵🇰",
+        "Nepal": "🇳🇵",
+        "Bhutan": "🇧🇹",
+        "Bangladesh": "🇧🇩",
+        "Sri Lanka": "🇱🇰",
+        "Maldives": "🇲🇻",
+        "Myanmar": "🇲🇲",
+        "Thailand": "🇹🇭",
+        "Laos": "🇱🇦",
+        "Cambodia": "🇰🇭",
+        "Vietnam": "🇻🇳",
+        "Malaysia": "🇲🇾",
+        "Singapore": "🇸🇬",
+        "Brunei": "🇧🇳",
+        "Philippines": "🇵🇭",
+        "Indonesia": "🇮🇩",
+        "East Timor": "🇹🇱",
+        "Papua New Guinea": "🇵🇬",
+        "Fiji": "🇫🇯",
+        "Vanuatu": "🇻🇺",
+        "New Caledonia": "🇳🇨",
+        "Solomon Islands": "🇸🇧",
+        "Kiribati": "🇰🇮",
+        "Tuvalu": "🇹🇻",
+        "Nauru": "🇳🇷",
+        "Palau": "🇵🇼",
+        "Marshall Islands": "🇲🇭",
+        "Micronesia": "🇫🇲",
+        "Samoa": "🇼🇸",
+        "Tonga": "🇹🇴",
+        "Cook Islands": "🇨🇰",
+        "Niue": "🇳🇺",
+        "Tokelau": "🇹🇰",
+        "Israel": "🇮🇱",
+        "Palestine": "🇵🇸",
+        "Jordan": "🇯🇴",
+        "Lebanon": "🇱🇧",
+        "Syria": "🇸🇾",
+        "Iraq": "🇮🇶",
+        "Iran": "🇮🇷",
+        "Kuwait": "🇰🇼",
+        "Saudi Arabia": "🇸🇦",
+        "Yemen": "🇾🇪",
+        "Oman": "🇴🇲",
+        "United Arab Emirates": "🇦🇪",
+        "Qatar": "🇶🇦",
+        "Bahrain": "🇧🇭",
+        "Turkey": "🇹🇷",
+        "Albania": "🇦🇱",
+        "North Macedonia": "🇲🇰",
+        "Kosovo": "🇽🇰",
+        "Serbia": "🇷🇸",
+        "Montenegro": "🇲🇪",
+        "Bosnia and Herzegovina": "🇧🇦",
+        "Liechtenstein": "🇱🇮",
+        "Monaco": "🇲🇨",
+        "Andorra": "🇦🇩",
+        "San Marino": "🇸🇲",
+        "Vatican City": "🇻🇦"
+      };
+      return flagMap[countryName] || "🌍";
     };
 
     const nextDemoQuestion = () => {
@@ -522,32 +754,59 @@ export default function TherapyPathfinder() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {currentDemoQuestion.options.map((option) => (
-                <Card 
-                  key={option.id}
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
-                    currentDemoAnswer === option.id
-                      ? 'ring-2 ring-primary bg-accent/50' 
-                      : 'hover:ring-2 hover:ring-primary/50'
-                  }`}
-                  onClick={() => handleDemoAnswerSelect(currentDemoQuestion.id, option.id)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-full border-2 ${
-                        currentDemoAnswer === option.id 
-                          ? 'border-primary bg-primary' 
-                          : 'border-muted-foreground'
-                      }`}>
-                        {currentDemoAnswer === option.id && (
-                          <CheckCircle className="w-4 h-4 text-white" />
-                        )}
+              {currentDemoQuestion.options.map((option) => {
+                // For country question, show selected country with flag if "other" was selected
+                let displayText = option.text;
+                if (currentDemoQuestion.id === "country" && option.id === "other" && answers.country && answers.country !== "other") {
+                  const flag = getCountryFlag(answers.country);
+                  displayText = `${flag} ${answers.country}`;
+                }
+                
+                return (
+                  <Card 
+                    key={option.id}
+                    className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
+                      currentDemoAnswer === option.id
+                        ? 'ring-2 ring-primary bg-accent/50' 
+                        : 'hover:ring-2 hover:ring-primary/50'
+                    }`}
+                    onClick={() => handleDemoAnswerSelect(currentDemoQuestion.id, option.id)}
+                  >
+                    <CardContent className="p-4">
+                      <div className="flex items-center space-x-3">
+                        <div className={`p-2 rounded-full border-2 ${
+                          currentDemoAnswer === option.id 
+                            ? 'border-primary bg-primary' 
+                            : 'border-muted-foreground'
+                        }`}>
+                          {currentDemoAnswer === option.id && (
+                            <CheckCircle className="w-4 h-4 text-white" />
+                          )}
+                        </div>
+                        <p className="text-foreground flex-1">{displayText}</p>
                       </div>
-                      <p className="text-foreground flex-1">{option.text}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CardContent>
+                  </Card>
+                );
+              })}
+              
+              {/* Country Dropdown for "Other" selection */}
+              {currentDemoQuestion.id === "country" && showCountryDropdown && (
+                <div className="mt-4 p-4 border border-primary/20 rounded-lg bg-accent/30">
+                  <h4 className="font-medium text-foreground mb-3">Please select your country:</h4>
+                  <div className="max-h-60 overflow-y-auto space-y-2">
+                    {countries.map((country) => (
+                      <div
+                        key={country}
+                        className="p-2 hover:bg-primary/10 rounded cursor-pointer transition-colors"
+                        onClick={() => handleCountrySelect(country)}
+                      >
+                        <span className="text-foreground">{country}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -561,7 +820,7 @@ export default function TherapyPathfinder() {
             </Button>
             <Button 
               onClick={nextDemoQuestion}
-              disabled={!currentDemoAnswer}
+              disabled={!currentDemoAnswer || (currentDemoAnswer === "other" && !answers.country)}
               className="bg-gradient-primary hover:bg-primary-hover text-white px-6 py-3 font-semibold shadow-soft disabled:opacity-50"
             >
               {currentDemoIndex === demographicsQuestions.length - 1 ? 'Continue' : 'Next'}
@@ -577,44 +836,73 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen bg-gradient-soft p-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
+          <div className="text-center mb-12">
+            <div className="w-16 h-16 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Heart className="w-8 h-8 text-white" />
+            </div>
+            <h2 className="text-4xl font-bold text-foreground mb-4">
               What brings you here today?
             </h2>
-            <p className="text-lg text-muted-foreground">
-              Select all the areas you'd like support with. Choose as many as apply to you.
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+              We're here to help you find the right support. Select all the areas that resonate with you - 
+              there's no right or wrong answer. Your journey to healing is unique. 💙
             </p>
+            <div className="flex items-center justify-center space-x-4 mt-6 text-sm text-muted-foreground">
+              <span className="flex items-center">
+                <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                Choose multiple options
+              </span>
+              <span className="flex items-center">
+                <Shield className="w-4 h-4 text-blue-500 mr-1" />
+                Completely confidential
+              </span>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {problems.map((problem) => {
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+            {problems.map((problem, index) => {
               const isSelected = selectedProblems.includes(problem.id);
               return (
                 <Card 
                   key={problem.id}
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
+                  className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 group ${
                     isSelected 
-                      ? 'ring-2 ring-primary bg-accent/50' 
-                      : 'hover:ring-2 hover:ring-primary/50'
+                      ? 'ring-2 ring-primary bg-gradient-to-br from-primary/5 to-purple-500/5 shadow-lg' 
+                      : 'hover:ring-2 hover:ring-primary/30 bg-white/80 backdrop-blur-sm'
                   }`}
                   onClick={() => handleProblemToggle(problem.id)}
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <CardContent className="p-6">
-                    <div className="flex items-start space-x-3">
-                      <div className={`p-2 rounded-lg ${isSelected ? 'bg-primary text-white' : 'bg-accent text-primary'}`}>
-                        {problem.icon}
+                    <div className="flex items-start space-x-4">
+                      <div className={`p-3 rounded-xl transition-all duration-300 ${
+                        isSelected 
+                          ? 'bg-gradient-to-r from-primary to-purple-600 text-white shadow-lg scale-110' 
+                          : 'bg-gradient-to-br from-accent to-accent/50 text-primary group-hover:scale-110'
+                      }`}>
+                        <div className="transition-transform duration-300 group-hover:rotate-12">
+                          {problem.icon}
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-foreground mb-2">
+                      <div className="flex-1 min-w-0">
+                        <h3 className={`font-bold text-lg mb-2 transition-colors duration-300 ${
+                          isSelected ? 'text-primary' : 'text-foreground'
+                        }`}>
                           {problem.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-sm text-muted-foreground leading-relaxed">
                           {problem.description}
                         </p>
                       </div>
-                      {isSelected && (
-                        <CheckCircle className="w-6 h-6 text-primary" />
-                      )}
+                      <div className={`transition-all duration-300 ${
+                        isSelected ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+                      }`}>
+                        {isSelected && (
+                          <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
+                            <CheckCircle className="w-5 h-5 text-white" />
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -622,22 +910,38 @@ export default function TherapyPathfinder() {
             })}
           </div>
 
-          <div className="text-center">
-            <Button 
-              onClick={() => setCurrentStep('questions')}
-              disabled={selectedProblems.length === 0}
-              className="bg-gradient-primary hover:bg-primary-hover text-white px-8 py-3 text-lg font-semibold shadow-soft disabled:opacity-50"
-            >
-              Continue to Questions
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <Button 
-              variant="ghost" 
-              onClick={() => setCurrentStep('demographics')}
-              className="ml-4"
-            >
-              Back
-            </Button>
+          <div className="text-center space-y-6">
+            {selectedProblems.length > 0 && (
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 max-w-md mx-auto">
+                <div className="flex items-center justify-center space-x-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  <span className="text-green-800 font-medium">
+                    {selectedProblems.length} area{selectedProblems.length !== 1 ? 's' : ''} selected
+                  </span>
+                </div>
+              </div>
+            )}
+            
+            <div className="space-y-4">
+              <Button 
+                onClick={() => setCurrentStep('questions')}
+                disabled={selectedProblems.length === 0}
+                className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+              >
+                Continue to Questions
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              
+              <div>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => setCurrentStep('demographics')}
+                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                >
+                  ← Back to Demographics
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -731,77 +1035,123 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen bg-gradient-soft p-4">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-8">
-            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-white" />
+          <div className="text-center mb-12">
+            <div className="w-20 h-20 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 relative group animate-pulse">
+              <CheckCircle 
+                className="w-10 h-10 text-white cursor-pointer hover:scale-110 transition-all duration-200 hover:rotate-12" 
+                onClick={() => window.location.reload()}
+              />
+              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
+                ↻
+              </div>
+              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                Click to restart
+              </div>
             </div>
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Your Recommended Therapy
+            <h2 className="text-4xl font-bold text-foreground mb-4">
+              Your Perfect Therapy Match
             </h2>
-            <Badge variant="secondary" className="text-lg px-4 py-1">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-6">
+              Based on your unique needs and preferences, we've found the therapy approach that's right for you. 
+              Your journey to healing starts here! ✨
+            </p>
+            <Badge variant="secondary" className="text-lg px-6 py-2 bg-gradient-to-r from-primary/10 to-purple-600/10 border-primary/20 text-primary font-semibold">
               {recommendation.type}
             </Badge>
           </div>
 
-          <Card className="shadow-card mb-8">
-            <CardHeader>
-              <CardTitle className="text-2xl text-center text-primary">
+          <Card className="shadow-xl mb-12 bg-gradient-to-br from-white to-primary/5 border-primary/20">
+            <CardHeader className="text-center pb-6">
+              <CardTitle className="text-3xl font-bold text-primary">
                 {recommendation.title}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {recommendation.description}
-              </p>
-
-              <div>
-                <h3 className="font-semibold text-foreground mb-3">Key Benefits:</h3>
-                <ul className="space-y-2">
-                  {recommendation.benefits.map((benefit, index) => (
-                    <li key={index} className="flex items-center space-x-2">
-                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                      <span className="text-muted-foreground">{benefit}</span>
-                    </li>
-                  ))}
-                </ul>
+            <CardContent className="space-y-8">
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200/50">
+                <p className="text-lg text-muted-foreground leading-relaxed text-center">
+                  {recommendation.description}
+                </p>
               </div>
 
-              <div>
-                <h3 className="font-semibold text-foreground mb-3">Particularly Suitable For:</h3>
-                <div className="flex flex-wrap gap-2">
-                  {recommendation.suitableFor.map((item, index) => (
-                    <Badge key={index} variant="outline">
-                      {item}
-                    </Badge>
-                  ))}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold text-foreground flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center">
+                      <CheckCircle className="w-5 h-5 text-white" />
+                    </div>
+                    <span>Key Benefits</span>
+                  </h3>
+                  <ul className="space-y-3">
+                    {recommendation.benefits.map((benefit, index) => (
+                      <li key={index} className="flex items-start space-x-3 group">
+                        <div className="w-6 h-6 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200">
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        </div>
+                        <span className="text-muted-foreground leading-relaxed">{benefit}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-xl font-bold text-foreground flex items-center space-x-2">
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                      <Users className="w-5 h-5 text-white" />
+                    </div>
+                    <span>Suitable For</span>
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {recommendation.suitableFor.map((item, index) => (
+                      <Badge 
+                        key={index} 
+                        variant="outline" 
+                        className="bg-gradient-to-r from-primary/10 to-purple-600/10 border-primary/30 text-primary hover:bg-primary/20 transition-colors duration-200"
+                      >
+                        {item}
+                      </Badge>
+                    ))}
+                  </div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          <div className="text-center space-y-4">
-            <div className="bg-white rounded-lg p-6 shadow-card">
-              <h3 className="font-semibold text-foreground mb-3">Ready to Get Started?</h3>
-              <p className="text-muted-foreground mb-4">
-                Contact OLIP Therapy to book your {recommendation.type} session today.
+          <div className="text-center space-y-8">
+            <div className="bg-gradient-to-br from-white to-primary/5 rounded-2xl p-8 shadow-xl border border-primary/20">
+              <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-8 h-8 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-3">Ready to Begin Your Healing Journey?</h3>
+              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+                Contact OLIP Therapy today to book your personalized {recommendation.type} session and take the first step towards positive change.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <Button className="bg-gradient-primary hover:bg-primary-hover text-white px-6 py-3 font-semibold shadow-soft" onClick={handleContactUs}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" 
+                  onClick={handleContactUs}
+                >
                   Contact Us
+                  <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
-                <Button variant="outline" className="px-6 py-3" onClick={handleVisitWebsite}>
+                <Button 
+                  variant="outline" 
+                  className="px-8 py-4 text-lg font-semibold border-primary/30 hover:bg-primary/5 transition-all duration-300" 
+                  onClick={handleVisitWebsite}
+                >
                   Visit Website
                 </Button>
               </div>
             </div>
             
-            <Button 
-              variant="ghost" 
-              onClick={() => setCurrentStep('problems')}
-              className="text-primary"
-            >
-              Take Assessment Again
-            </Button>
+            <div className="space-y-4">
+              <Button 
+                variant="ghost" 
+                onClick={() => setCurrentStep('problems')}
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              >
+                ← Take Assessment Again
+              </Button>
+            </div>
           </div>
         </div>
       </div>
