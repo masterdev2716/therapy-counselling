@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Users, Brain, Heart, Shield, Lightbulb } from "lucide-react";
-import { getWebsiteUrl, getCountryFlag } from "@/components/therapy/utils";
+import { getWebsiteUrl, getCountryFlag, navigateToUrl } from "@/components/therapy/utils";
 import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions } from "@/components/therapy/constants";
 import { countries } from "@/components/therapy/countries";
 import type { TherapyRecommendation } from "@/types/therapy";
@@ -62,8 +62,8 @@ export default function TherapyPathfinder() {
       therapyScores["Couples Counselling"] = 0;
     }
 
-    const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) =>
-      score > max.score ? { therapy, score } : max,
+    const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) => 
+      score > max.score ? { therapy, score } : max, 
       { therapy: "CBT", score: 0 }
     );
 
@@ -93,13 +93,13 @@ export default function TherapyPathfinder() {
   const handleVisitWebsite = () => {
     if (recommendation) {
       const url = getWebsiteUrl(recommendation.type);
-      window.open(url, '_self');
+      navigateToUrl(url);
     }
   };
 
   const handleContactUs = () => {
     const url = "https://www.oliptherapy.co.uk/contact";
-    window.open(url, '_self');
+    navigateToUrl(url);
   };
 
   if (currentStep === 'welcome') {
@@ -239,30 +239,30 @@ export default function TherapyPathfinder() {
                 }
 
                 return (
-                  <Card 
-                    key={option.id}
-                    className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
-                      currentDemoAnswer === option.id
-                        ? 'ring-2 ring-primary bg-accent/50' 
-                        : 'hover:ring-2 hover:ring-primary/50'
-                    }`}
-                    onClick={() => handleDemoAnswerSelect(currentDemoQuestion.id, option.id)}
-                  >
-                    <CardContent className="p-4">
-                      <div className="flex items-center space-x-3">
-                        <div className={`p-2 rounded-full border-2 ${
-                          currentDemoAnswer === option.id 
-                            ? 'border-primary bg-primary' 
-                            : 'border-muted-foreground'
-                        }`}>
-                          {currentDemoAnswer === option.id && (
-                            <CheckCircle className="w-4 h-4 text-white" />
-                          )}
-                        </div>
-                        <p className="text-foreground flex-1">{displayText}</p>
+                <Card 
+                  key={option.id}
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
+                    currentDemoAnswer === option.id
+                      ? 'ring-2 ring-primary bg-accent/50' 
+                      : 'hover:ring-2 hover:ring-primary/50'
+                  }`}
+                  onClick={() => handleDemoAnswerSelect(currentDemoQuestion.id, option.id)}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2 rounded-full border-2 ${
+                        currentDemoAnswer === option.id 
+                          ? 'border-primary bg-primary' 
+                          : 'border-muted-foreground'
+                      }`}>
+                        {currentDemoAnswer === option.id && (
+                          <CheckCircle className="w-4 h-4 text-white" />
+                        )}
                       </div>
-                    </CardContent>
-                  </Card>
+                        <p className="text-foreground flex-1">{displayText}</p>
+                    </div>
+                  </CardContent>
+                </Card>
                 );
               })}
 
@@ -356,7 +356,7 @@ export default function TherapyPathfinder() {
                           : 'bg-gradient-to-br from-accent to-accent/50 text-primary group-hover:scale-110'
                       }`}>
                         <div className="transition-transform duration-300 group-hover:rotate-12">
-                          {problem.icon}
+                        {problem.icon}
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
@@ -372,11 +372,11 @@ export default function TherapyPathfinder() {
                       <div className={`transition-all duration-300 ${
                         isSelected ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
                       }`}>
-                        {isSelected && (
+                      {isSelected && (
                           <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center shadow-lg">
                             <CheckCircle className="w-5 h-5 text-white" />
                           </div>
-                        )}
+                      )}
                       </div>
                     </div>
                   </CardContent>
@@ -398,23 +398,23 @@ export default function TherapyPathfinder() {
             )}
             
             <div className="space-y-4">
-              <Button 
-                onClick={() => setCurrentStep('questions')}
-                disabled={selectedProblems.length === 0}
+            <Button 
+              onClick={() => setCurrentStep('questions')}
+              disabled={selectedProblems.length === 0}
                 className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
-              >
-                Continue to Questions
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
+            >
+              Continue to Questions
+              <ArrowRight className="ml-2 w-5 h-5" />
+            </Button>
               
               <div>
-                <Button 
-                  variant="ghost" 
-                  onClick={() => setCurrentStep('demographics')}
+            <Button 
+              variant="ghost" 
+              onClick={() => setCurrentStep('demographics')}
                   className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
+            >
                   ← Back to Demographics
-                </Button>
+            </Button>
               </div>
             </div>
           </div>
@@ -544,8 +544,8 @@ export default function TherapyPathfinder() {
             <CardContent className="space-y-8">
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200/50">
                 <p className="text-lg text-muted-foreground leading-relaxed text-center">
-                  {recommendation.description}
-                </p>
+                {recommendation.description}
+              </p>
               </div>
 
               <div className="grid md:grid-cols-2 gap-8">
@@ -557,16 +557,16 @@ export default function TherapyPathfinder() {
                     <span>Key Benefits</span>
                   </h3>
                   <ul className="space-y-3">
-                    {recommendation.benefits.map((benefit, index) => (
+                  {recommendation.benefits.map((benefit, index) => (
                       <li key={index} className="flex items-start space-x-3 group">
                         <div className="w-6 h-6 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mt-0.5 group-hover:scale-110 transition-transform duration-200">
                           <CheckCircle className="w-4 h-4 text-white" />
                         </div>
                         <span className="text-muted-foreground leading-relaxed">{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-foreground flex items-center space-x-2">
@@ -575,16 +575,16 @@ export default function TherapyPathfinder() {
                     </div>
                     <span>Suitable For</span>
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {recommendation.suitableFor.map((item, index) => (
+                <div className="flex flex-wrap gap-2">
+                  {recommendation.suitableFor.map((item, index) => (
                       <Badge 
                         key={index} 
                         variant="outline" 
                         className="bg-gradient-to-r from-primary/10 to-purple-600/10 border-primary/30 text-primary hover:bg-primary/20 transition-colors duration-200"
                       >
-                        {item}
-                      </Badge>
-                    ))}
+                      {item}
+                    </Badge>
+                  ))}
                   </div>
                 </div>
               </div>
@@ -619,13 +619,13 @@ export default function TherapyPathfinder() {
             </div>
             
             <div className="space-y-4">
-              <Button 
-                variant="ghost" 
-                onClick={() => setCurrentStep('problems')}
+            <Button 
+              variant="ghost" 
+              onClick={() => setCurrentStep('problems')}
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-              >
+            >
                 ← Take Assessment Again
-              </Button>
+            </Button>
             </div>
           </div>
         </div>

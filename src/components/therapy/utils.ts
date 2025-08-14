@@ -179,4 +179,24 @@ export const getWebsiteUrl = (therapyType: string): string => {
 		CBT: "https://www.oliptherapy.co.uk/cbtpage",
 	};
 	return urlMap[therapyType] || "https://www.oliptherapy.co.uk";
+};
+
+export const navigateToUrl = (url: string): void => {
+	// Check if we're in an iframe
+	if (window.self !== window.top) {
+		// We're in an iframe - try to communicate with parent or use top-level navigation
+		try {
+			// Try to send message to parent window
+			window.parent.postMessage({ 
+				type: 'NAVIGATE', 
+				url: url 
+			}, '*');
+		} catch (e) {
+			// Fallback: try to navigate the top window
+			window.top.location.href = url;
+		}
+	} else {
+		// We're not in an iframe - use normal navigation
+		window.open(url, '_top');
+	}
 }; 
