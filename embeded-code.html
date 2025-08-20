@@ -1,0 +1,63 @@
+<!-- Floating Therapy Widget -->
+<style>
+  #therapy-widget-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #4f46e5; /* example color */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+
+  #therapy-widget-window {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 480px;
+    height: 600px;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+    border-radius: 12px;
+    overflow: hidden;
+    display: none;
+    z-index: 999;
+  }
+
+  #therapy-widget-window iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>
+
+<div id="therapy-widget-button">🗨️</div>
+<div id="therapy-widget-window">
+  <iframe src="https://therapy-counselling.vercel.app" title="Therapy Assessment"></iframe>
+</div>
+
+<script>
+  const button = document.getElementById('therapy-widget-button');
+  const windowDiv = document.getElementById('therapy-widget-window');
+
+  button.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      // On mobile, open in new tab
+      window.open('https://therapy-counselling.vercel.app', '_blank');
+    } else {
+      // Toggle desktop window
+      windowDiv.style.display = windowDiv.style.display === 'none' ? 'block' : 'none';
+    }
+  });
+</script>

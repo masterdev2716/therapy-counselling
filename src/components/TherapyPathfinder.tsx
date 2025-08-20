@@ -120,27 +120,27 @@ export default function TherapyPathfinder() {
           </CardHeader>
           <CardContent className="text-center">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
                 <Users className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-primary">Counselling</span>
                 <span className="text-xs text-muted-foreground text-center mt-1">Talk Therapy</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-pink-50 to-pink-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
                 <Heart className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-primary">Couples Therapy</span>
                 <span className="text-xs text-muted-foreground text-center mt-1">Relationship Healing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
                 <Brain className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-primary">EMDR</span>
                 <span className="text-xs text-muted-foreground text-center mt-1">Trauma Processing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-yellow-50 to-yellow-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
                 <Lightbulb className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-primary">Hypnotherapy</span>
                 <span className="text-xs text-muted-foreground text-center mt-1">Subconscious Healing</span>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-gradient-to-br from-green-50 to-green-100/50 hover:border-primary hover:shadow-lg transition-all duration-300 group">
+              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
                 <CheckCircle className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-semibold text-primary">CBT</span>
                 <span className="text-xs text-muted-foreground text-center mt-1">Thought Patterns</span>
@@ -343,7 +343,7 @@ export default function TherapyPathfinder() {
                   className={`cursor-pointer transition-all duration-300 hover:shadow-xl hover:scale-105 group ${
                     isSelected 
                       ? 'ring-2 ring-primary bg-gradient-to-br from-primary/5 to-purple-500/5 shadow-lg' 
-                      : 'hover:ring-2 hover:ring-primary/30 bg-white/80 backdrop-blur-sm'
+                      : 'hover:ring-2 hover:ring-primary/30 bg-card/80 backdrop-blur-sm'
                   }`}
                   onClick={() => handleProblemToggle(problem.id)}
                   style={{ animationDelay: `${index * 100}ms` }}
@@ -387,10 +387,10 @@ export default function TherapyPathfinder() {
 
           <div className="text-center space-y-6">
             {selectedProblems.length > 0 && (
-              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 max-w-md mx-auto">
+              <div className="bg-gradient-to-r from-green-500/10 to-emerald-600/10 border border-green-500/30 rounded-xl p-4 max-w-md mx-auto">
                 <div className="flex items-center justify-center space-x-2">
-                  <CheckCircle className="w-5 h-5 text-green-600" />
-                  <span className="text-green-800 font-medium">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  <span className="text-green-300 font-medium">
                     {selectedProblems.length} area{selectedProblems.length !== 1 ? 's' : ''} selected
                   </span>
                 </div>
@@ -535,14 +535,14 @@ export default function TherapyPathfinder() {
             </Badge>
           </div>
 
-          <Card className="shadow-xl mb-12 bg-gradient-to-br from-white to-primary/5 border-primary/20">
+          <Card className="shadow-xl mb-12 bg-gradient-to-br from-card to-primary/5 border-primary/20">
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-3xl font-bold text-primary">
                 {recommendation.title}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-8">
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border border-blue-200/50">
+              <div className="bg-gradient-to-r from-primary/10 to-purple-600/10 rounded-xl p-6 border border-primary/20">
                 <p className="text-lg text-muted-foreground leading-relaxed text-center">
                 {recommendation.description}
               </p>
@@ -592,7 +592,7 @@ export default function TherapyPathfinder() {
           </Card>
 
           <div className="text-center space-y-8">
-            <div className="bg-gradient-to-br from-white to-primary/5 rounded-2xl p-8 shadow-xl border border-primary/20">
+            <div className="bg-gradient-to-br from-card to-primary/5 rounded-2xl p-8 shadow-xl border border-primary/20">
               <div className="w-16 h-16 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-8 h-8 text-white" />
               </div>
