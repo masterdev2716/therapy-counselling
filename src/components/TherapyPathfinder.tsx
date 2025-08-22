@@ -104,7 +104,7 @@ export default function TherapyPathfinder() {
 
   if (currentStep === 'welcome') {
     return (
-      <div className="min-h-screen bg-gradient-soft flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4">
         <Card className="max-w-2xl w-full shadow-card">
           <CardHeader className="text-center pb-8">
             <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
@@ -205,7 +205,7 @@ export default function TherapyPathfinder() {
     };
 
     return (
-      <div className="min-h-screen bg-gradient-soft p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
@@ -309,7 +309,7 @@ export default function TherapyPathfinder() {
 
   if (currentStep === 'problems') {
     return (
-      <div className="min-h-screen bg-gradient-soft p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <div className="w-16 h-16 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -429,7 +429,7 @@ export default function TherapyPathfinder() {
     const progress = ((currentQuestionIndex + 1) / assessmentQuestions.length) * 100;
 
     return (
-      <div className="min-h-screen bg-gradient-soft p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-2xl mx-auto">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
@@ -508,7 +508,7 @@ export default function TherapyPathfinder() {
 
   if (currentStep === 'results' && recommendation) {
     return (
-      <div className="min-h-screen bg-gradient-soft p-4">
+      <div className="min-h-screen p-4">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
             <div className="w-20 h-20 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 relative group animate-pulse">
