@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Users, Brain, Heart, Shield, Lightbulb } from "lucide-react";
-import { getWebsiteUrl, getCountryFlag, navigateToUrl } from "@/components/therapy/utils";
+import { getWebsiteUrl, navigateToUrl } from "@/components/therapy/utils";
 import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions } from "@/components/therapy/constants";
-import { countries } from "@/components/therapy/countries";
 import type { TherapyRecommendation } from "@/types/therapy";
 
 export default function TherapyPathfinder() {
@@ -15,7 +14,6 @@ export default function TherapyPathfinder() {
   const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendation, setRecommendation] = useState<TherapyRecommendation | null>(null);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
 
   const handleProblemToggle = (problemId: string) => {
     setSelectedProblems(prev => 
@@ -38,13 +36,20 @@ export default function TherapyPathfinder() {
       "Couples Counselling": 0
     };
 
+    // Give much higher weight to selected problems
     selectedProblems.forEach(problemId => {
       const problemRec = therapyRecommendations[problemId];
       if (problemRec) {
-        therapyScores[problemRec.type] += 3;
+        // Give higher weight to relationship problems specifically
+        if (problemId === 'relationships') {
+          therapyScores[problemRec.type] += 8; // Much higher weight for relationships
+        } else {
+          therapyScores[problemRec.type] += 5; // Higher weight for other problems
+        }
       }
     });
 
+    // Add scores from assessment questions
     Object.entries(answers).forEach(([questionId, answerId]) => {
       const question = assessmentQuestions.find(q => q.id === questionId);
       const selectedOption = question?.options.find(o => o.id === answerId);
@@ -55,10 +60,18 @@ export default function TherapyPathfinder() {
       }
     });
 
+    // Special logic for Couples Counselling
     const relationshipStatus = answers.relationship_status;
     const wantsToWorkTogether = answers.preference === 'together';
     const hasRelationshipProblems = selectedProblems.includes('relationships');
-    if (!hasRelationshipProblems && (relationshipStatus === 'single' || !wantsToWorkTogether)) {
+    
+    // Boost Couples Counselling if they have relationship problems AND want to work together
+    if (hasRelationshipProblems && wantsToWorkTogether) {
+      therapyScores["Couples Counselling"] += 5; // Additional boost
+    }
+    
+    // Only allow Couples Counselling if they have relationship problems AND are in a relationship
+    if (!hasRelationshipProblems || relationshipStatus === 'single') {
       therapyScores["Couples Counselling"] = 0;
     }
 
@@ -148,9 +161,9 @@ export default function TherapyPathfinder() {
             </div>
             <Button 
               onClick={() => setCurrentStep('demographics')}
-              className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             >
-              Begin Your Journey
+              Begin Here
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
             <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
@@ -176,16 +189,6 @@ export default function TherapyPathfinder() {
 
     const handleDemoAnswerSelect = (questionId: string, answerId: string) => {
       setAnswers(prev => ({ ...prev, [questionId]: answerId }));
-      if (questionId === "country" && answerId === "other") {
-        setShowCountryDropdown(true);
-      } else if (questionId === "country") {
-        setShowCountryDropdown(false);
-      }
-    };
-
-    const handleCountrySelect = (country: string) => {
-      setAnswers(prev => ({ ...prev, country: country }));
-      setShowCountryDropdown(false);
     };
 
     const nextDemoQuestion = () => {
@@ -232,12 +235,6 @@ export default function TherapyPathfinder() {
             </CardHeader>
             <CardContent className="space-y-3">
               {currentDemoQuestion.options.map((option) => {
-                let displayText = option.text;
-                if (currentDemoQuestion.id === "country" && option.id === "other" && answers.country && answers.country !== "other") {
-                  const flag = getCountryFlag(answers.country);
-                  displayText = `${flag} ${answers.country}`;
-                }
-
                 return (
                 <Card 
                   key={option.id}
@@ -259,29 +256,12 @@ export default function TherapyPathfinder() {
                           <CheckCircle className="w-4 h-4 text-white" />
                         )}
                       </div>
-                        <p className="text-foreground flex-1">{displayText}</p>
+                        <p className="text-foreground flex-1">{option.text}</p>
                     </div>
                   </CardContent>
                 </Card>
                 );
               })}
-
-              {currentDemoQuestion.id === "country" && showCountryDropdown && (
-                <div className="mt-4 p-4 border border-primary/20 rounded-lg bg-accent/30">
-                  <h4 className="font-medium text-foreground mb-3">Please select your country:</h4>
-                  <div className="max-h-60 overflow-y-auto space-y-2">
-                    {countries.map((country) => (
-                      <div
-                        key={country}
-                        className="p-2 hover:bg-primary/10 rounded cursor-pointer transition-colors"
-                        onClick={() => handleCountrySelect(country)}
-                      >
-                        <span className="text-foreground">{country}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </CardContent>
           </Card>
 
@@ -295,7 +275,7 @@ export default function TherapyPathfinder() {
             </Button>
             <Button 
               onClick={nextDemoQuestion}
-              disabled={!currentDemoAnswer || (currentDemoAnswer === "other" && !answers.country)}
+              disabled={!currentDemoAnswer}
               className="bg-gradient-primary hover:bg-primary-hover text-white px-6 py-3 font-semibold shadow-soft disabled:opacity-50"
             >
               {currentDemoIndex === demographicsQuestions.length - 1 ? 'Continue' : 'Next'}
@@ -401,7 +381,7 @@ export default function TherapyPathfinder() {
             <Button 
               onClick={() => setCurrentStep('questions')}
               disabled={selectedProblems.length === 0}
-                className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
             >
               Continue to Questions
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -602,7 +582,7 @@ export default function TherapyPathfinder() {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
-                  className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" 
+                  className="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105" 
                   onClick={handleContactUs}
                 >
                   Contact Us

@@ -199,35 +199,39 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 
 export const demographicsQuestions = [
 	{
-		id: "country",
-		question: "Which country are you currently in?",
-		options: [
-			{ id: "uk", text: "🇬🇧 England" },
-			{ id: "us", text: "🇺🇸 US" },
-			{ id: "canada", text: "🇨🇦 Canada" },
-			{ id: "australia", text: "🇦🇺 Australia" },
-			{ id: "other", text: "🌍 Other" },
-		],
-	},
-	{
 		id: "gender",
 		question: "What is your gender identity?",
 		options: [
 			{ id: "woman", text: "Woman" },
 			{ id: "man", text: "Man" },
+			{ id: "prefer-not-to-say", text: "Prefer not to say" },
 		],
 	},
 	{
-		id: "age",
-		question: "How old are you?",
+		id: "therapy_experience",
+		question: "Have you had therapy or counselling before?",
 		options: [
-			{ id: "-18", text: "-18 years" },
-			{ id: "18-24", text: "18-24 years" },
-			{ id: "25-34", text: "25-34 years" },
-			{ id: "35-44", text: "35-44 years" },
-			{ id: "45-54", text: "45-54 years" },
-			{ id: "55-64", text: "55-64 years" },
-			{ id: "65+", text: "65+ years" },
+			{ id: "never", text: "No, this would be my first time" },
+			{ id: "some", text: "Yes, I've had some experience" },
+			{ id: "extensive", text: "Yes, I've had extensive therapy" },
+		],
+	},
+	{
+		id: "support_system",
+		question: "How would you describe your current support system?",
+		options: [
+			{ id: "strong", text: "Strong - I have family, friends, or community support" },
+			{ id: "moderate", text: "Moderate - Some support, but could be better" },
+			{ id: "limited", text: "Limited - I feel quite isolated" },
+		],
+	},
+	{
+		id: "life_changes",
+		question: "Are you currently going through any major life changes?",
+		options: [
+			{ id: "yes_major", text: "Yes, major changes (job, relationship, loss, etc.)" },
+			{ id: "yes_minor", text: "Yes, some smaller changes" },
+			{ id: "no", text: "No, things are relatively stable" },
 		],
 	},
 ]; 
