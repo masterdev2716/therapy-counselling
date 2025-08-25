@@ -308,17 +308,6 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 
 export const demographicsQuestions = [
 	{
-		id: "age_group",
-		question: "What is your age group?",
-		options: [
-			{ id: "18-25", text: "18-25 years old" },
-			{ id: "26-35", text: "26-35 years old" },
-			{ id: "36-45", text: "36-45 years old" },
-			{ id: "46-55", text: "46-55 years old" },
-			{ id: "56+", text: "56+ years old" },
-		],
-	},
-	{
 		id: "gender",
 		question: "What is your gender identity?",
 		options: [
