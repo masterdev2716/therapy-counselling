@@ -343,32 +343,4 @@ export const demographicsQuestions = [
 			{ id: "no", text: "No, things are relatively stable" },
 		],
 	},
-	{
-		id: "cultural_background",
-		question: "How important is cultural sensitivity in your therapy?",
-		options: [
-			{ id: "very_important", text: "Very important - I need someone who understands my background" },
-			{ id: "somewhat_important", text: "Somewhat important - It would be helpful" },
-			{ id: "not_important", text: "Not important - I'm flexible" },
-		],
-	},
-	{
-		id: "accessibility_needs",
-		question: "Do you have any accessibility needs for therapy?",
-		options: [
-			{ id: "none", text: "No accessibility needs" },
-			{ id: "physical", text: "Physical accessibility needs" },
-			{ id: "sensory", text: "Sensory accessibility needs" },
-			{ id: "cognitive", text: "Cognitive accessibility needs" },
-		],
-	},
-	{
-		id: "financial_considerations",
-		question: "How important are financial considerations in choosing therapy?",
-		options: [
-			{ id: "very_important", text: "Very important - I need affordable options" },
-			{ id: "somewhat_important", text: "Somewhat important - I have a budget" },
-			{ id: "not_important", text: "Not important - I can afford what I need" },
-		],
-	},
 ]; 
