@@ -36,20 +36,20 @@ export default function TherapyPathfinder() {
       "Couples Counselling": 0
     };
 
-    // Give much higher weight to selected problems
+    // Give moderate weight to selected problems (reduced from 5-8 to 3-4)
     selectedProblems.forEach(problemId => {
       const problemRec = therapyRecommendations[problemId];
       if (problemRec) {
-        // Give higher weight to relationship problems specifically
+        // Give moderate weight to relationship problems specifically
         if (problemId === 'relationships') {
-          therapyScores[problemRec.type] += 8; // Much higher weight for relationships
+          therapyScores[problemRec.type] += 4; // Reduced weight for relationships
         } else {
-          therapyScores[problemRec.type] += 5; // Higher weight for other problems
+          therapyScores[problemRec.type] += 3; // Reduced weight for other problems
         }
       }
     });
 
-    // Add scores from assessment questions
+    // Add scores from assessment questions (these now carry more weight)
     Object.entries(answers).forEach(([questionId, answerId]) => {
       const question = assessmentQuestions.find(q => q.id === questionId);
       const selectedOption = question?.options.find(o => o.id === answerId);
@@ -64,16 +64,58 @@ export default function TherapyPathfinder() {
     const relationshipStatus = answers.relationship_status;
     const wantsToWorkTogether = answers.preference === 'together';
     const hasRelationshipProblems = selectedProblems.includes('relationships');
+    const relationshipDynamics = answers.relationship_dynamics;
     
     // Boost Couples Counselling if they have relationship problems AND want to work together
     if (hasRelationshipProblems && wantsToWorkTogether) {
-      therapyScores["Couples Counselling"] += 5; // Additional boost
+      therapyScores["Couples Counselling"] += 3; // Reduced boost
+    }
+    
+    // Additional boost for specific relationship dynamics
+    if (relationshipDynamics === 'conflict' || relationshipDynamics === 'communication' || relationshipDynamics === 'distance') {
+      therapyScores["Couples Counselling"] += 2;
     }
     
     // Only allow Couples Counselling if they have relationship problems AND are in a relationship
     if (!hasRelationshipProblems || relationshipStatus === 'single') {
       therapyScores["Couples Counselling"] = 0;
     }
+
+    // Special logic for EMDR - boost if trauma-related answers
+    const hasTrauma = answers.past_trauma && answers.past_trauma !== 'no';
+    const traumaTriggers = answers.stress_triggers === 'memories';
+    if (hasTrauma || traumaTriggers) {
+      therapyScores["EMDR"] += 2;
+    }
+
+    // Special logic for Hypnotherapy - boost if body-mind focused
+    const prefersBodyMind = answers.preference === 'body-mind';
+    const hasPhysicalSymptoms = answers.physical_symptoms && answers.physical_symptoms !== 'no';
+    if (prefersBodyMind || hasPhysicalSymptoms) {
+      therapyScores["Hypnotherapy"] += 2;
+    }
+
+    // Special logic for Counselling - boost if emotional/relational focus
+    const isEmotional = answers.thinking_patterns === 'emotional';
+    const prefersTalking = answers.preference === 'talking';
+    const wantsUnderstanding = answers.therapy_goals === 'understanding';
+    if (isEmotional || prefersTalking || wantsUnderstanding) {
+      therapyScores["Counselling"] += 2;
+    }
+
+    // Special logic for CBT - boost if practical/analytical focus
+    const isAnalytical = answers.thinking_patterns === 'analytical';
+    const prefersPractical = answers.preference === 'practical';
+    const wantsChange = answers.therapy_goals === 'change';
+    const isReadyForChange = answers.change_readiness === 'very_ready';
+    if (isAnalytical || prefersPractical || wantsChange || isReadyForChange) {
+      therapyScores["CBT"] += 2;
+    }
+
+    // Normalize scores to prevent any single factor from dominating
+    Object.keys(therapyScores).forEach(therapy => {
+      therapyScores[therapy] = Math.min(therapyScores[therapy], 25); // Cap at 25
+    });
 
     const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) => 
       score > max.score ? { therapy, score } : max, 
@@ -127,7 +169,7 @@ export default function TherapyPathfinder() {
               Find Your Perfect Therapy Match
             </CardTitle>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              Feeling overwhelmed by therapy options? Take our gentle 2-minute assessment and discover 
+              Feeling overwhelmed by therapy options? Take our comprehensive 5-7 minute assessment and discover 
               the therapy approach that's right for you. Your journey to healing starts here. ✨
             </p>
           </CardHeader>
@@ -169,7 +211,7 @@ export default function TherapyPathfinder() {
             <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
-                Takes less than 2 minutes
+                Takes 5-7 minutes
               </span>
               <span className="flex items-center">
                 <Shield className="w-4 h-4 text-blue-500 mr-1" />
@@ -300,7 +342,7 @@ export default function TherapyPathfinder() {
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               We're here to help you find the right support. Select all the areas that resonate with you - 
-              there's no right or wrong answer. Your journey to healing is unique. 💙
+              there's no right or wrong answer. We'll then ask you detailed questions to find your perfect match. 💙
             </p>
             <div className="flex items:center justify-center space-x-4 mt-6 text-sm text-muted-foreground">
               <span className="flex items-center">
