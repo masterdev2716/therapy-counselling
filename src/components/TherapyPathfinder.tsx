@@ -36,91 +36,126 @@ export default function TherapyPathfinder() {
       "Couples Counselling": 0
     };
 
-    // Give moderate weight to selected problems (reduced from 5-8 to 3-4)
+    // PRIORITY 1: Check for relationship problems FIRST - this should be definitive
+    const hasRelationshipProblems = selectedProblems.includes('relationships');
+    const relationshipStatus = answers.relationship_status;
+    const wantsToWorkTogether = answers.preference === 'together';
+    const wantsRelationshipGoal = answers.therapy_goals === 'relationship';
+    const relationshipTriggers = answers.stress_triggers === 'relationships';
+    const relationshipDynamics = answers.relationship_dynamics;
+
+    // CRITICAL: If they selected relationship problems, this should be the PRIMARY focus
+    if (hasRelationshipProblems) {
+      // Check if they're in a relationship (not single)
+      if (relationshipStatus !== 'single') {
+        // Give MASSIVE boost for relationship problems + being in relationship
+        therapyScores["Couples Counselling"] += 50; // Much higher base score
+        
+        // Additional boosts for relationship-focused answers
+        if (wantsToWorkTogether) {
+          therapyScores["Couples Counselling"] += 30; // Working together is key
+        }
+        if (wantsRelationshipGoal) {
+          therapyScores["Couples Counselling"] += 25;
+        }
+        if (relationshipTriggers) {
+          therapyScores["Couples Counselling"] += 20;
+        }
+        if (relationshipDynamics === 'conflict' || relationshipDynamics === 'communication' || relationshipDynamics === 'distance') {
+          therapyScores["Couples Counselling"] += 15;
+        }
+        
+        // If they want to work together AND have relationship problems, this should be definitive
+        if (wantsToWorkTogether) {
+          therapyScores["Couples Counselling"] += 40; // Extra boost for explicit desire to work together
+        }
+      } else {
+        // If they're single but selected relationship problems, they might be looking for individual therapy for relationship issues
+        therapyScores["Couples Counselling"] = 0; // Can't do couples therapy if single
+      }
+    } else {
+      // If they didn't select relationship problems, couples counselling should be very low priority
+      therapyScores["Couples Counselling"] = 0;
+    }
+
+    // PRIORITY 2: Add scores from selected problems (reduced weight for other problems when relationship problems selected)
     selectedProblems.forEach(problemId => {
       const problemRec = therapyRecommendations[problemId];
-      if (problemRec) {
-        // Give moderate weight to relationship problems specifically
-        if (problemId === 'relationships') {
-          therapyScores[problemRec.type] += 4; // Reduced weight for relationships
+      if (problemRec && problemId !== 'relationships') { // Skip relationships as we handled it above
+        // If user selected relationship problems, heavily reduce other problem scores
+        if (hasRelationshipProblems) {
+          therapyScores[problemRec.type] += 2; // Very low weight for other problems when relationship problems selected
         } else {
-          therapyScores[problemRec.type] += 3; // Reduced weight for other problems
+          therapyScores[problemRec.type] += 8; // Standard weight for other problems
         }
       }
     });
 
-    // Add scores from assessment questions (these now carry more weight)
+    // PRIORITY 3: Add scores from assessment questions (heavily reduced weight when relationship problems selected)
     Object.entries(answers).forEach(([questionId, answerId]) => {
       const question = assessmentQuestions.find(q => q.id === questionId);
       const selectedOption = question?.options.find(o => o.id === answerId);
       if (selectedOption) {
         Object.entries(selectedOption.weight).forEach(([therapy, weight]) => {
-          therapyScores[therapy] += weight;
+          // If user selected relationship problems, heavily reduce other therapy scores
+          if (hasRelationshipProblems && therapy !== "Couples Counselling") {
+            therapyScores[therapy] += Math.floor(weight * 0.1); // Reduce by 90% for other therapies
+          } else if (!hasRelationshipProblems) {
+            therapyScores[therapy] += Math.floor(weight * 0.5); // Normal reduction for general case
+          }
+          // If relationship problems selected, don't add any weight to other therapies from general questions
         });
       }
     });
 
-    // Special logic for Couples Counselling
-    const relationshipStatus = answers.relationship_status;
-    const wantsToWorkTogether = answers.preference === 'together';
-    const hasRelationshipProblems = selectedProblems.includes('relationships');
-    const relationshipDynamics = answers.relationship_dynamics;
+    // PRIORITY 4: Special logic for other therapies (heavily reduced when relationship problems selected)
+    // If user selected relationship problems, heavily reduce other therapy boosts
+    const boostMultiplier = hasRelationshipProblems ? 0.1 : 1; // 90% reduction for other therapies when relationship problems selected
     
-    // Boost Couples Counselling if they have relationship problems AND want to work together
-    if (hasRelationshipProblems && wantsToWorkTogether) {
-      therapyScores["Couples Counselling"] += 3; // Reduced boost
-    }
-    
-    // Additional boost for specific relationship dynamics
-    if (relationshipDynamics === 'conflict' || relationshipDynamics === 'communication' || relationshipDynamics === 'distance') {
-      therapyScores["Couples Counselling"] += 2;
-    }
-    
-    // Only allow Couples Counselling if they have relationship problems AND are in a relationship
-    if (!hasRelationshipProblems || relationshipStatus === 'single') {
-      therapyScores["Couples Counselling"] = 0;
-    }
-
-    // Special logic for EMDR - boost if trauma-related answers
     const hasTrauma = answers.past_trauma && answers.past_trauma !== 'no';
     const traumaTriggers = answers.stress_triggers === 'memories';
     if (hasTrauma || traumaTriggers) {
-      therapyScores["EMDR"] += 2;
+      therapyScores["EMDR"] += Math.floor(3 * boostMultiplier);
     }
 
-    // Special logic for Hypnotherapy - boost if body-mind focused
     const prefersBodyMind = answers.preference === 'body-mind';
     const hasPhysicalSymptoms = answers.physical_symptoms && answers.physical_symptoms !== 'no';
     if (prefersBodyMind || hasPhysicalSymptoms) {
-      therapyScores["Hypnotherapy"] += 2;
+      therapyScores["Hypnotherapy"] += Math.floor(3 * boostMultiplier);
     }
 
-    // Special logic for Counselling - boost if emotional/relational focus
     const isEmotional = answers.thinking_patterns === 'emotional';
     const prefersTalking = answers.preference === 'talking';
     const wantsUnderstanding = answers.therapy_goals === 'understanding';
     if (isEmotional || prefersTalking || wantsUnderstanding) {
-      therapyScores["Counselling"] += 2;
+      therapyScores["Counselling"] += Math.floor(3 * boostMultiplier);
     }
 
-    // Special logic for CBT - boost if practical/analytical focus
     const isAnalytical = answers.thinking_patterns === 'analytical';
     const prefersPractical = answers.preference === 'practical';
     const wantsChange = answers.therapy_goals === 'change';
     const isReadyForChange = answers.change_readiness === 'very_ready';
     if (isAnalytical || prefersPractical || wantsChange || isReadyForChange) {
-      therapyScores["CBT"] += 2;
+      therapyScores["CBT"] += Math.floor(3 * boostMultiplier);
     }
 
     // Normalize scores to prevent any single factor from dominating
     Object.keys(therapyScores).forEach(therapy => {
-      therapyScores[therapy] = Math.min(therapyScores[therapy], 25); // Cap at 25
+      therapyScores[therapy] = Math.min(therapyScores[therapy], 100); // Increased cap to 100 to allow for higher couples counselling scores
     });
 
     const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) => 
       score > max.score ? { therapy, score } : max, 
       { therapy: "CBT", score: 0 }
     );
+
+    // Debug logging
+    console.log('Selected problems:', selectedProblems);
+    console.log('Has relationship problems:', hasRelationshipProblems);
+    console.log('Relationship status:', relationshipStatus);
+    console.log('Wants to work together:', wantsToWorkTogether);
+    console.log('Final therapy scores:', therapyScores);
+    console.log('Recommended therapy:', recommendedTherapy);
 
     const rec = Object.values(therapyRecommendations).find(r => r.type === recommendedTherapy.therapy);
     if (rec) {
