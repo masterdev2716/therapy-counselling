@@ -265,16 +265,6 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		],
 	},
 	{
-		id: "learning_style",
-		question: "How do you prefer to learn new skills?",
-		options: [
-			{ id: "practical", text: "Through practical exercises and homework", weight: { CBT: 4, Counselling: 2, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "discussion", text: "Through discussion and exploration", weight: { CBT: 2, Counselling: 4, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "experience", text: "Through direct experience and practice", weight: { CBT: 3, Counselling: 2, EMDR: 3, Hypnotherapy: 4, "Couples Counselling": 0 } },
-			{ id: "visual", text: "Through visual aids and demonstrations", weight: { CBT: 3, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-		],
-	},
-	{
 		id: "emotional_regulation",
 		question: "How do you typically handle intense emotions?",
 		options: [
