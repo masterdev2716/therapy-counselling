@@ -8,7 +8,7 @@ import { problems, therapyRecommendations, assessmentQuestions, demographicsQues
 import type { TherapyRecommendation } from "@/types/therapy";
 
 export default function TherapyPathfinder() {
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'demographics' | 'problems' | 'questions' | 'results'>('welcome');
+  const [currentStep, setCurrentStep] = useState<'welcome' | 'demographics' | 'problems' | 'questions' | 'results'>('demographics');
   const [selectedProblems, setSelectedProblems] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
