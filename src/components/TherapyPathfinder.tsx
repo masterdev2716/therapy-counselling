@@ -4,14 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Users, Brain, Heart, Shield, Lightbulb } from "lucide-react";
 import { getWebsiteUrl, navigateToUrl } from "@/components/therapy/utils";
-import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions, questionSections } from "@/components/therapy/constants";
+import { problems, therapyRecommendations, assessmentQuestions, questionSections } from "@/components/therapy/constants";
 import type { TherapyRecommendation } from "@/types/therapy";
 
 export default function TherapyPathfinder() {
-  const [currentStep, setCurrentStep] = useState<'welcome' | 'demographics' | 'problems' | 'questions' | 'results'>('demographics');
+  const [currentStep, setCurrentStep] = useState<'welcome' | 'problems' | 'questions' | 'results'>('problems');
   const [selectedProblems, setSelectedProblems] = useState<string[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [currentDemoIndex, setCurrentDemoIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [recommendation, setRecommendation] = useState<TherapyRecommendation | null>(null);
 
@@ -263,7 +262,7 @@ export default function TherapyPathfinder() {
                 </div>
               </div>
               <Button 
-                onClick={() => setCurrentStep('demographics')}
+                onClick={() => setCurrentStep('problems')}
                 className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 Begin Here
@@ -286,123 +285,7 @@ export default function TherapyPathfinder() {
     );
   }
 
-  if (currentStep === 'demographics') {
-    const currentDemoQuestion = demographicsQuestions[currentDemoIndex];
-    const currentDemoAnswer = answers[currentDemoQuestion.id];
-    const progress = ((currentDemoIndex + 1) / demographicsQuestions.length) * 100;
 
-    const handleDemoAnswerSelect = (questionId: string, answerId: string) => {
-      setAnswers(prev => ({ ...prev, [questionId]: answerId }));
-      
-      // Auto-advance to next question after a short delay
-      setTimeout(() => {
-        if (currentDemoIndex < demographicsQuestions.length - 1) {
-          setCurrentDemoIndex(prev => prev + 1);
-        } else {
-          setCurrentStep('problems');
-        }
-      }, 300); // 300ms delay for smooth transition
-    };
-
-    const nextDemoQuestion = () => {
-      if (currentDemoIndex < demographicsQuestions.length - 1) {
-        setCurrentDemoIndex(prev => prev + 1);
-      } else {
-        setCurrentStep('problems');
-      }
-    };
-
-    const prevDemoQuestion = () => {
-      if (currentDemoIndex > 0) {
-        setCurrentDemoIndex(prev => prev - 1);
-      } else {
-        setCurrentStep('welcome');
-      }
-    };
-
-    return (
-      <div className="min-h-screen p-4">
-        {/* Top Logo */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
-          <div 
-            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
-            onClick={() => window.location.reload()}
-          >
-            <Heart className="w-8 h-8 text-white" />
-          </div>
-        </div>
-        
-        <div className="max-w-2xl mx-auto pt-24">
-          <div className="mb-8">
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-sm font-medium text-muted-foreground">
-                Step {currentDemoIndex + 1} of {demographicsQuestions.length}
-              </span>
-              <span className="text-sm font-medium text-muted-foreground">
-                {Math.round(progress)}% Complete
-              </span>
-            </div>
-            <div className="w-full bg-accent rounded-full h-2">
-              <div 
-                className="bg-gradient-primary h-2 rounded-full transition-all duration-300"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-          </div>
-
-          <Card className="shadow-card mb-8">
-            <CardHeader>
-              <CardTitle className="text-xl text-foreground">
-                {currentDemoQuestion.question}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {currentDemoQuestion.options.map((option) => {
-                return (
-                <Card 
-                  key={option.id}
-                  className={`cursor-pointer transition-all duration-200 hover:shadow-soft ${
-                    currentDemoAnswer === option.id
-                      ? 'ring-2 ring-primary bg-accent/50' 
-                      : 'hover:ring-2 hover:ring-primary/50'
-                  }`}
-                  onClick={() => handleDemoAnswerSelect(currentDemoQuestion.id, option.id)}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center space-x-3">
-                      <div className={`p-2 rounded-full border-2 ${
-                        currentDemoAnswer === option.id 
-                          ? 'border-primary bg-primary' 
-                          : 'border-muted-foreground'
-                      }`}>
-                        {currentDemoAnswer === option.id && (
-                          <CheckCircle className="w-4 h-4 text-white" />
-                        )}
-                      </div>
-                        <p className="text-foreground flex-1">{option.text}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-                );
-              })}
-            </CardContent>
-          </Card>
-
-          {currentDemoIndex > 0 && (
-            <div className="flex justify-center">
-              <Button 
-                variant="outline" 
-                onClick={prevDemoQuestion}
-                className="px-6 py-3"
-              >
-                Previous
-              </Button>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
 
   if (currentStep === 'problems') {
     return (
@@ -510,16 +393,6 @@ export default function TherapyPathfinder() {
               Continue to Questions
               <ArrowRight className="ml-2 w-5 h-5" />
             </Button>
-              
-              <div>
-            <Button 
-              variant="ghost" 
-              onClick={() => window.location.reload()}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-            >
-                  ← Back to Demographics
-            </Button>
-              </div>
             </div>
           </div>
         </div>
@@ -617,17 +490,15 @@ export default function TherapyPathfinder() {
             </CardContent>
           </Card>
 
-          {currentQuestionIndex > 0 && (
-            <div className="flex justify-center">
-              <Button 
-                variant="outline" 
-                onClick={prevQuestion}
-                className="px-6 py-3"
-              >
-                Previous
-              </Button>
-            </div>
-          )}
+          <div className="flex justify-center">
+            <Button 
+              variant="outline" 
+              onClick={currentQuestionIndex > 0 ? prevQuestion : () => setCurrentStep('problems')}
+              className="px-6 py-3"
+            >
+              Previous
+            </Button>
+          </div>
         </div>
       </div>
     );
