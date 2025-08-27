@@ -193,7 +193,8 @@ export default function TherapyPathfinder() {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(prev => prev - 1);
     } else {
-      setCurrentStep('problems');
+      // Reload the entire app when going back from first assessment question
+      window.location.reload();
     }
   };
 
@@ -211,67 +212,76 @@ export default function TherapyPathfinder() {
 
   if (currentStep === 'welcome') {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-2xl w-full shadow-card">
-          <CardHeader className="text-center pb-8">
-            <div className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4">
-              <Brain className="w-8 h-8 text-white" />
-            </div>
-            <CardTitle className="text-4xl font-bold text-foreground mb-4">
-              Find Your Perfect Therapy Match
-            </CardTitle>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              Feeling overwhelmed by therapy options? Take our comprehensive 40-question assessment and discover 
-              the therapy approach that's right for you. Your journey to healing starts here. ✨
-            </p>
-          </CardHeader>
-          <CardContent className="text-center">
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
-                <Users className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-primary">Counselling</span>
-                <span className="text-xs text-muted-foreground text-center mt-1">Talk Therapy</span>
+      <div className="min-h-screen p-4">
+        {/* Top Logo */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+          <div 
+            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
+            onClick={() => window.location.reload()}
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        
+        <div className="min-h-screen flex items-center justify-center pt-24">
+          <Card className="max-w-2xl w-full shadow-card">
+            <CardHeader className="text-center pb-8">
+              <CardTitle className="text-4xl font-bold text-foreground mb-4">
+                Find Your Perfect Therapy Match
+              </CardTitle>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
+                Feeling overwhelmed by therapy options? Take our comprehensive 40-question assessment and discover 
+                the therapy approach that's right for you. Your journey to healing starts here. ✨
+              </p>
+            </CardHeader>
+            <CardContent className="text-center">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+                <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                  <Users className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-semibold text-primary">Counselling</span>
+                  <span className="text-xs text-muted-foreground text-center mt-1">Talk Therapy</span>
+                </div>
+                <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                  <Heart className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-semibold text-primary">Couples Therapy</span>
+                  <span className="text-xs text-muted-foreground text-center mt-1">Relationship Healing</span>
+                </div>
+                <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                  <Brain className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-semibold text-primary">EMDR</span>
+                  <span className="text-xs text-muted-foreground text-center mt-1">Trauma Processing</span>
+                </div>
+                <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                  <Lightbulb className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-semibold text-primary">Hypnotherapy</span>
+                  <span className="text-xs text-muted-foreground text-center mt-1">Subconscious Healing</span>
+                </div>
+                <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
+                  <CheckCircle className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
+                  <span className="text-sm font-semibold text-primary">CBT</span>
+                  <span className="text-xs text-muted-foreground text-center mt-1">Thought Patterns</span>
+                </div>
               </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
-                <Heart className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-primary">Couples Therapy</span>
-                <span className="text-xs text-muted-foreground text-center mt-1">Relationship Healing</span>
-              </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
-                <Brain className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-primary">EMDR</span>
-                <span className="text-xs text-muted-foreground text-center mt-1">Trauma Processing</span>
-              </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
-                <Lightbulb className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-primary">Hypnotherapy</span>
-                <span className="text-xs text-muted-foreground text-center mt-1">Subconscious Healing</span>
-              </div>
-              <div className="flex flex-col items-center p-4 border-2 border-primary/30 rounded-xl bg-card/60 backdrop-blur-sm hover:border-primary hover:shadow-lg transition-all duration-300 group">
-                <CheckCircle className="w-8 h-8 text-primary mb-2 group-hover:scale-110 transition-transform" />
-                <span className="text-sm font-semibold text-primary">CBT</span>
-                <span className="text-xs text-muted-foreground text-center mt-1">Thought Patterns</span>
-              </div>
-            </div>
-            <Button 
-              onClick={() => setCurrentStep('demographics')}
-              className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            >
-              Begin Here
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-            <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
-              <span className="flex items-center">
-                <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
-                40 questions
-              </span>
-              <span className="flex items-center">
-                <Shield className="w-4 h-4 text-blue-500 mr-1" />
-                Completely confidential
-              </span>
-            </p>
-          </CardContent>
-        </Card>
+              <Button 
+                onClick={() => setCurrentStep('demographics')}
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                Begin Here
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
+              <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
+                <span className="flex items-center">
+                  <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
+                  40 questions
+                </span>
+                <span className="flex items-center">
+                  <Shield className="w-4 h-4 text-blue-500 mr-1" />
+                  Completely confidential
+                </span>
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     );
   }
@@ -312,7 +322,17 @@ export default function TherapyPathfinder() {
 
     return (
       <div className="min-h-screen p-4">
-        <div className="max-w-2xl mx-auto">
+        {/* Top Logo */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+          <div 
+            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
+            onClick={() => window.location.reload()}
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        
+        <div className="max-w-2xl mx-auto pt-24">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-medium text-muted-foreground">
@@ -387,11 +407,18 @@ export default function TherapyPathfinder() {
   if (currentStep === 'problems') {
     return (
       <div className="min-h-screen p-4">
-        <div className="max-w-4xl mx-auto">
+        {/* Top Logo */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+          <div 
+            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
+            onClick={() => window.location.reload()}
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        
+        <div className="max-w-4xl mx-auto pt-24">
           <div className="text-center mb-12">
-            <div className="w-16 h-16 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Heart className="w-8 h-8 text-white" />
-            </div>
             <h2 className="text-4xl font-bold text-foreground mb-4">
               What brings you here today?
             </h2>
@@ -487,7 +514,7 @@ export default function TherapyPathfinder() {
               <div>
             <Button 
               variant="ghost" 
-              onClick={() => setCurrentStep('demographics')}
+              onClick={() => window.location.reload()}
                   className="text-muted-foreground hover:text-foreground transition-colors duration-200"
             >
                   ← Back to Demographics
@@ -512,7 +539,17 @@ export default function TherapyPathfinder() {
 
     return (
       <div className="min-h-screen p-4">
-        <div className="max-w-2xl mx-auto">
+        {/* Top Logo */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+          <div 
+            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
+            onClick={() => window.location.reload()}
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        
+        <div className="max-w-2xl mx-auto pt-24">
           <div className="mb-8">
             <div className="flex justify-between items-center mb-4">
               <span className="text-sm font-medium text-muted-foreground">
@@ -599,7 +636,17 @@ export default function TherapyPathfinder() {
   if (currentStep === 'results' && recommendation) {
     return (
       <div className="min-h-screen p-4">
-        <div className="max-w-3xl mx-auto">
+        {/* Top Logo */}
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+          <div 
+            className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
+            onClick={() => window.location.reload()}
+          >
+            <Heart className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        
+        <div className="max-w-3xl mx-auto pt-24">
           <div className="text-center mb-12">
             <div className="w-20 h-20 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 relative group animate-pulse">
               <CheckCircle 
