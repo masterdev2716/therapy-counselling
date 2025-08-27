@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, CheckCircle, Users, Brain, Heart, Shield, Lightbulb } from "lucide-react";
 import { getWebsiteUrl, navigateToUrl } from "@/components/therapy/utils";
-import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions } from "@/components/therapy/constants";
+import { problems, therapyRecommendations, assessmentQuestions, demographicsQuestions, questionSections } from "@/components/therapy/constants";
 import type { TherapyRecommendation } from "@/types/therapy";
 
 export default function TherapyPathfinder() {
@@ -25,6 +25,15 @@ export default function TherapyPathfinder() {
 
   const handleAnswerSelect = (questionId: string, answerId: string) => {
     setAnswers(prev => ({ ...prev, [questionId]: answerId }));
+    
+    // Auto-advance to next question after a short delay
+    setTimeout(() => {
+      if (currentQuestionIndex < assessmentQuestions.length - 1) {
+        setCurrentQuestionIndex(prev => prev + 1);
+      } else {
+        calculateRecommendation();
+      }
+    }, 300); // 300ms delay for smooth transition
   };
 
   const calculateRecommendation = () => {
@@ -38,40 +47,31 @@ export default function TherapyPathfinder() {
 
     // PRIORITY 1: Check for relationship problems FIRST - this should be definitive
     const hasRelationshipProblems = selectedProblems.includes('relationships');
-    const relationshipStatus = answers.relationship_status;
-    const wantsToWorkTogether = answers.preference === 'together';
-    const wantsRelationshipGoal = answers.therapy_goals === 'relationship';
-    const relationshipTriggers = answers.stress_triggers === 'relationships';
-    const relationshipDynamics = answers.relationship_dynamics;
+    // Note: We removed the old relationship-specific questions, so we'll rely on problem selection and new questions
+    const wantsToWorkTogether = false; // Will be determined by new questions if needed
+    const wantsRelationshipGoal = false; // Will be determined by new questions if needed
+    const relationshipTriggers = false; // Will be determined by new questions if needed
+    const relationshipDynamics = 'good'; // Default value since old question was removed
 
     // CRITICAL: If they selected relationship problems, this should be the PRIMARY focus
     if (hasRelationshipProblems) {
-      // Check if they're in a relationship (not single)
-      if (relationshipStatus !== 'single') {
-        // Give MASSIVE boost for relationship problems + being in relationship
-        therapyScores["Couples Counselling"] += 50; // Much higher base score
-        
-        // Additional boosts for relationship-focused answers
-        if (wantsToWorkTogether) {
-          therapyScores["Couples Counselling"] += 30; // Working together is key
-        }
-        if (wantsRelationshipGoal) {
-          therapyScores["Couples Counselling"] += 25;
-        }
-        if (relationshipTriggers) {
-          therapyScores["Couples Counselling"] += 20;
-        }
-        if (relationshipDynamics === 'conflict' || relationshipDynamics === 'communication' || relationshipDynamics === 'distance') {
-          therapyScores["Couples Counselling"] += 15;
-        }
-        
-        // If they want to work together AND have relationship problems, this should be definitive
-        if (wantsToWorkTogether) {
-          therapyScores["Couples Counselling"] += 40; // Extra boost for explicit desire to work together
-        }
-      } else {
-        // If they're single but selected relationship problems, they might be looking for individual therapy for relationship issues
-        therapyScores["Couples Counselling"] = 0; // Can't do couples therapy if single
+      // Give MASSIVE boost for relationship problems
+      therapyScores["Couples Counselling"] += 60; // Higher base score for relationships
+      
+      // Additional boosts for relationship-focused answers from new questions
+      if (wantsToWorkTogether) {
+        therapyScores["Couples Counselling"] += 35; // Working together is key
+      }
+      if (wantsRelationshipGoal) {
+        therapyScores["Couples Counselling"] += 30;
+      }
+      if (relationshipTriggers) {
+        therapyScores["Couples Counselling"] += 25;
+      }
+      
+      // If they want to work together AND have relationship problems, this should be definitive
+      if (wantsToWorkTogether) {
+        therapyScores["Couples Counselling"] += 45; // Extra boost for explicit desire to work together
       }
     } else {
       // If they didn't select relationship problems, couples counselling should be very low priority
@@ -84,64 +84,81 @@ export default function TherapyPathfinder() {
       if (problemRec && problemId !== 'relationships') { // Skip relationships as we handled it above
         // If user selected relationship problems, heavily reduce other problem scores
         if (hasRelationshipProblems) {
-          therapyScores[problemRec.type] += 2; // Very low weight for other problems when relationship problems selected
+          therapyScores[problemRec.type] += 3; // Very low weight for other problems when relationship problems selected
         } else {
-          therapyScores[problemRec.type] += 8; // Standard weight for other problems
+          therapyScores[problemRec.type] += 10; // Standard weight for other problems
         }
       }
     });
 
-    // PRIORITY 3: Add scores from assessment questions (heavily reduced weight when relationship problems selected)
+    // PRIORITY 3: Enhanced scoring from the new 40 assessment questions
     Object.entries(answers).forEach(([questionId, answerId]) => {
       const question = assessmentQuestions.find(q => q.id === questionId);
       const selectedOption = question?.options.find(o => o.id === answerId);
       if (selectedOption) {
         Object.entries(selectedOption.weight).forEach(([therapy, weight]) => {
-          // If user selected relationship problems, heavily reduce other therapy scores
+          // Enhanced scoring logic for the new 40 questions
           if (hasRelationshipProblems && therapy !== "Couples Counselling") {
-            therapyScores[therapy] += Math.floor(weight * 0.1); // Reduce by 90% for other therapies
+            // Reduce other therapy scores when relationship problems are selected
+            therapyScores[therapy] += Math.floor(weight * 0.15); // 85% reduction for other therapies
           } else if (!hasRelationshipProblems) {
-            therapyScores[therapy] += Math.floor(weight * 0.5); // Normal reduction for general case
+            // Normal scoring for non-relationship scenarios
+            therapyScores[therapy] += Math.floor(weight * 0.8); // 20% reduction for general case
           }
-          // If relationship problems selected, don't add any weight to other therapies from general questions
         });
       }
     });
 
     // PRIORITY 4: Special logic for other therapies (heavily reduced when relationship problems selected)
-    // If user selected relationship problems, heavily reduce other therapy boosts
-    const boostMultiplier = hasRelationshipProblems ? 0.1 : 1; // 90% reduction for other therapies when relationship problems selected
+    const boostMultiplier = hasRelationshipProblems ? 0.15 : 1; // 85% reduction for other therapies when relationship problems selected
     
-    const hasTrauma = answers.past_trauma && answers.past_trauma !== 'no';
-    const traumaTriggers = answers.stress_triggers === 'memories';
-    if (hasTrauma || traumaTriggers) {
-      therapyScores["EMDR"] += Math.floor(3 * boostMultiplier);
+    // Enhanced trauma detection using new questions
+    const hasTraumaQuestions = answers.q24_experienced_trauma_affects === 'yes' || 
+                              answers.q25_memories_feel_recent === 'yes' ||
+                              answers.q26_triggers_sights_sounds_smells === 'yes' ||
+                              answers.q27_nightmares_flashbacks === 'yes';
+    
+    if (hasTraumaQuestions) {
+      therapyScores["EMDR"] += Math.floor(5 * boostMultiplier);
     }
 
-    const prefersBodyMind = answers.preference === 'body-mind';
-    const hasPhysicalSymptoms = answers.physical_symptoms && answers.physical_symptoms !== 'no';
-    if (prefersBodyMind || hasPhysicalSymptoms) {
-      therapyScores["Hypnotherapy"] += Math.floor(3 * boostMultiplier);
+    // Enhanced hypnotherapy detection using new questions
+    const hasHypnoQuestions = answers.q10_like_retraining_subconscious === 'yes' ||
+                             answers.q12_guided_relaxation_hypnosis_ok === 'yes' ||
+                             answers.q13_change_habit === 'yes' ||
+                             answers.q16_like_reset_automatic === 'yes' ||
+                             answers.q17_subconscious_not_just_logic === 'yes';
+    
+    if (hasHypnoQuestions) {
+      therapyScores["Hypnotherapy"] += Math.floor(5 * boostMultiplier);
     }
 
-    const isEmotional = answers.thinking_patterns === 'emotional';
-    const prefersTalking = answers.preference === 'talking';
-    const wantsUnderstanding = answers.therapy_goals === 'understanding';
-    if (isEmotional || prefersTalking || wantsUnderstanding) {
-      therapyScores["Counselling"] += Math.floor(3 * boostMultiplier);
+    // Enhanced counselling detection using new questions
+    const hasCounsellingQuestions = answers.q18_weighed_down_sadness === 'yes' ||
+                                   answers.q19_want_safe_space === 'yes' ||
+                                   answers.q20_feel_misunderstood === 'yes' ||
+                                   answers.q22_make_sense_talking === 'yes' ||
+                                   answers.q23_value_long_term_support === 'yes';
+    
+    if (hasCounsellingQuestions) {
+      therapyScores["Counselling"] += Math.floor(5 * boostMultiplier);
     }
 
-    const isAnalytical = answers.thinking_patterns === 'analytical';
-    const prefersPractical = answers.preference === 'practical';
-    const wantsChange = answers.therapy_goals === 'change';
-    const isReadyForChange = answers.change_readiness === 'very_ready';
-    if (isAnalytical || prefersPractical || wantsChange || isReadyForChange) {
-      therapyScores["CBT"] += Math.floor(3 * boostMultiplier);
+    // Enhanced CBT detection using new questions
+    const hasCBTQuestions = answers.q07_racing_thoughts_night === 'yes' ||
+                           answers.q08_replay_events_mind === 'yes' ||
+                           answers.q09_want_practical_tools === 'yes' ||
+                           answers.q11_paralysed_what_if === 'yes' ||
+                           answers.q30_like_practical_strategies_daily === 'yes' ||
+                           answers.q32_spot_change_unhelpful_thinking === 'yes';
+    
+    if (hasCBTQuestions) {
+      therapyScores["CBT"] += Math.floor(5 * boostMultiplier);
     }
 
     // Normalize scores to prevent any single factor from dominating
     Object.keys(therapyScores).forEach(therapy => {
-      therapyScores[therapy] = Math.min(therapyScores[therapy], 100); // Increased cap to 100 to allow for higher couples counselling scores
+      therapyScores[therapy] = Math.min(therapyScores[therapy], 120); // Increased cap to allow for higher scores
     });
 
     const recommendedTherapy = Object.entries(therapyScores).reduce((max, [therapy, score]) => 
@@ -149,11 +166,11 @@ export default function TherapyPathfinder() {
       { therapy: "CBT", score: 0 }
     );
 
-    // Debug logging
+    // Enhanced debug logging
     console.log('Selected problems:', selectedProblems);
     console.log('Has relationship problems:', hasRelationshipProblems);
-    console.log('Relationship status:', relationshipStatus);
     console.log('Wants to work together:', wantsToWorkTogether);
+    console.log('New question responses:', Object.entries(answers).filter(([key]) => key.startsWith('q')));
     console.log('Final therapy scores:', therapyScores);
     console.log('Recommended therapy:', recommendedTherapy);
 
@@ -204,7 +221,7 @@ export default function TherapyPathfinder() {
               Find Your Perfect Therapy Match
             </CardTitle>
             <p className="text-lg text-muted-foreground leading-relaxed max-w-lg mx-auto">
-              Feeling overwhelmed by therapy options? Take our comprehensive 5-7 minute assessment and discover 
+              Feeling overwhelmed by therapy options? Take our comprehensive 40-question assessment and discover 
               the therapy approach that's right for you. Your journey to healing starts here. ✨
             </p>
           </CardHeader>
@@ -246,7 +263,7 @@ export default function TherapyPathfinder() {
             <p className="text-sm text-muted-foreground mt-6 flex items-center justify-center space-x-4">
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
-                Takes 5-7 minutes
+                40 questions
               </span>
               <span className="flex items-center">
                 <Shield className="w-4 h-4 text-blue-500 mr-1" />
@@ -266,6 +283,15 @@ export default function TherapyPathfinder() {
 
     const handleDemoAnswerSelect = (questionId: string, answerId: string) => {
       setAnswers(prev => ({ ...prev, [questionId]: answerId }));
+      
+      // Auto-advance to next question after a short delay
+      setTimeout(() => {
+        if (currentDemoIndex < demographicsQuestions.length - 1) {
+          setCurrentDemoIndex(prev => prev + 1);
+        } else {
+          setCurrentStep('problems');
+        }
+      }, 300); // 300ms delay for smooth transition
     };
 
     const nextDemoQuestion = () => {
@@ -342,23 +368,17 @@ export default function TherapyPathfinder() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-between">
-            <Button 
-              variant="outline" 
-              onClick={prevDemoQuestion}
-              className="px-6 py-3"
-            >
-              {currentDemoIndex === 0 ? 'Back to Start' : 'Previous'}
-            </Button>
-            <Button 
-              onClick={nextDemoQuestion}
-              disabled={!currentDemoAnswer}
-              className="bg-gradient-primary hover:bg-primary-hover text-white px-6 py-3 font-semibold shadow-soft disabled:opacity-50"
-            >
-              {currentDemoIndex === demographicsQuestions.length - 1 ? 'Continue' : 'Next'}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
+          {currentDemoIndex > 0 && (
+            <div className="flex justify-center">
+              <Button 
+                variant="outline" 
+                onClick={prevDemoQuestion}
+                className="px-6 py-3"
+              >
+                Previous
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -484,6 +504,11 @@ export default function TherapyPathfinder() {
     const currentQuestion = assessmentQuestions[currentQuestionIndex];
     const currentAnswer = answers[currentQuestion.id];
     const progress = ((currentQuestionIndex + 1) / assessmentQuestions.length) * 100;
+    
+    // Get current section
+    const currentSection = questionSections.find(section => 
+      currentQuestionIndex >= section.start && currentQuestionIndex <= section.end
+    );
 
     return (
       <div className="min-h-screen p-4">
@@ -504,6 +529,20 @@ export default function TherapyPathfinder() {
               ></div>
             </div>
           </div>
+
+          {/* Section Header */}
+          {currentSection && (
+            <div className="mb-6 text-center">
+              <div className="bg-gradient-to-r from-primary/10 to-purple-600/10 border border-primary/20 rounded-xl p-4">
+                <h3 className="text-lg font-semibold text-primary mb-1">
+                  {currentSection.title}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {currentSection.description}
+                </p>
+              </div>
+            </div>
+          )}
 
           <Card className="shadow-card mb-8">
             <CardHeader>
@@ -541,23 +580,17 @@ export default function TherapyPathfinder() {
             </CardContent>
           </Card>
 
-          <div className="flex justify-between">
-            <Button 
-              variant="outline" 
-              onClick={prevQuestion}
-              className="px-6 py-3"
-            >
-              {currentQuestionIndex === 0 ? 'Back to Problems' : 'Previous'}
-            </Button>
-            <Button 
-              onClick={nextQuestion}
-              disabled={!currentAnswer}
-              className="bg-gradient-primary hover:bg-primary-hover text-white px-6 py-3 font-semibold shadow-soft disabled:opacity-50"
-            >
-              {currentQuestionIndex === assessmentQuestions.length - 1 ? 'Get Results' : 'Next'}
-              <ArrowRight className="ml-2 w-5 h-5" />
-            </Button>
-          </div>
+          {currentQuestionIndex > 0 && (
+            <div className="flex justify-center">
+              <Button 
+                variant="outline" 
+                onClick={prevQuestion}
+                className="px-6 py-3"
+              >
+                Previous
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );

@@ -148,150 +148,382 @@ export const therapyRecommendations: Record<string, TherapyRecommendation> = {
 	},
 };
 
+// Section mapping for the 40 questions
+export const questionSections = [
+  { start: 0, end: 5, title: "General Wellbeing & Motivation", description: "Understanding your current situation and readiness for change" },
+  { start: 6, end: 11, title: "Stress, Worry & Overthinking", description: "Exploring patterns of anxiety and cognitive processes" },
+  { start: 12, end: 16, title: "Habits & Behaviour Change", description: "Identifying areas where you want to make lasting changes" },
+  { start: 17, end: 22, title: "Exploring Feelings & Relationships", description: "Understanding emotional patterns and interpersonal dynamics" },
+  { start: 23, end: 28, title: "Trauma & Past Experiences", description: "Addressing difficult memories and their current impact" },
+  { start: 29, end: 33, title: "Coping Tools & Structure", description: "Finding practical approaches that work for you" },
+  { start: 34, end: 39, title: "Personal Preferences & Style", description: "Determining your preferred therapy approach" }
+];
+
 export const assessmentQuestions: AssessmentQuestion[] = [
 	{
-		id: "relationship_status",
-		question: "What is your current relationship status?",
+		id: "q01_general_not_working",
+		question: "Do you feel something in your life isn’t working right now, and you’re not sure how to fix it?",
 		options: [
-			{ id: "single", text: "Single", weight: { CBT: 1, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "relationship", text: "In a relationship/married", weight: { CBT: 1, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 2 } },
-			{ id: "complicated", text: "It's complicated", weight: { CBT: 1, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 3 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "severity",
-		question: "How would you describe the impact of your concerns on your daily life?",
+		id: "q02_feel_stuck_patterns",
+		question: "Do you sometimes feel “stuck” in repeating the same patterns?",
 		options: [
-			{ id: "mild", text: "Mild - Occasional difficulty, but I can usually manage", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "moderate", text: "Moderate - Regular challenges that affect my work or relationships", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 1 } },
-			{ id: "severe", text: "Severe - Significant disruption to most areas of my life", weight: { CBT: 2, Counselling: 4, EMDR: 3, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "duration",
-		question: "How long have you been experiencing these concerns?",
+		id: "q03_more_control_thoughts_emotions",
+		question: "Do you wish you had more control over your thoughts or emotions?",
 		options: [
-			{ id: "recent", text: "Recent - A few weeks to a few months", weight: { CBT: 3, Counselling: 3, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 2 } },
-			{ id: "ongoing", text: "Ongoing - Several months to a year", weight: { CBT: 3, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 2 } },
-			{ id: "longterm", text: "Long-term - More than a year", weight: { CBT: 2, Counselling: 3, EMDR: 3, Hypnotherapy: 2, "Couples Counselling": 3 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "preference",
-		question: "What type of approach appeals to you most?",
+		id: "q04_confidence_dipped",
+		question: "Have you noticed your confidence has dipped in recent months?",
 		options: [
-			{ id: "talking", text: "Talking through my thoughts and feelings", weight: { CBT: 2, Counselling: 4, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "practical", text: "Learning practical techniques and strategies", weight: { CBT: 4, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "body-mind", text: "Working with the mind-body connection", weight: { CBT: 1, Counselling: 1, EMDR: 4, Hypnotherapy: 4, "Couples Counselling": 0 } },
-			{ id: "together", text: "Working with my partner to improve our relationship", weight: { CBT: 1, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 4 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 3, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "past_trauma",
-		question: "Do you have specific traumatic memories or past events that still affect you?",
+		id: "q05_avoid_due_to_worry",
+		question: "Do you find yourself avoiding situations because of worry or stress?",
 		options: [
-			{ id: "yes_specific", text: "Yes, specific traumatic events that I can identify", weight: { CBT: 1, Counselling: 2, EMDR: 4, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "yes_unclear", text: "Yes, but I'm not sure exactly what or when", weight: { CBT: 2, Counselling: 3, EMDR: 3, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "no", text: "No, my concerns are not related to past trauma", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 3, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "thinking_patterns",
-		question: "How would you describe your thinking patterns?",
+		id: "q06_want_change_not_sure_start",
+		question: "Are you looking for change but not sure where to start?",
 		options: [
-			{ id: "overthinking", text: "I tend to overthink and get stuck in negative thought loops", weight: { CBT: 4, Counselling: 2, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "emotional", text: "I'm very emotional and feel things deeply", weight: { CBT: 2, Counselling: 4, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "avoidant", text: "I tend to avoid thinking about difficult things", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "analytical", text: "I like to analyze and understand things logically", weight: { CBT: 4, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 3, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 2: Stress, Worry & Overthinking (CBT/Hypnotherapy)
+	{
+		id: "q07_racing_thoughts_night",
+		question: "Do racing thoughts keep you awake at night?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "physical_symptoms",
-		question: "Do you experience physical symptoms related to your emotional state?",
+		id: "q08_replay_events_mind",
+		question: "Do you replay conversations or events over and over in your mind?",
 		options: [
-			{ id: "yes_often", text: "Yes, often - tension, headaches, stomach issues", weight: { CBT: 2, Counselling: 2, EMDR: 3, Hypnotherapy: 4, "Couples Counselling": 0 } },
-			{ id: "yes_sometimes", text: "Yes, sometimes when very stressed", weight: { CBT: 3, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "no", text: "No, my issues are purely emotional/mental", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "coping_mechanisms",
-		question: "What do you currently do to cope with difficult emotions?",
+		id: "q09_want_practical_tools",
+		question: "Do you want practical tools to calm anxiety and challenge unhelpful thoughts?",
 		options: [
-			{ id: "avoidance", text: "I try to avoid or distract myself", weight: { CBT: 4, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "talking", text: "I talk to friends or family", weight: { CBT: 2, Counselling: 4, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "exercise", text: "I exercise or do physical activities", weight: { CBT: 3, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "nothing", text: "I don't have effective coping strategies", weight: { CBT: 4, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "relationship_dynamics",
-		question: "How would you describe your current relationship dynamics?",
+		id: "q10_like_retraining_subconscious",
+		question: "Do you like the idea of gently retraining your subconscious to feel calmer?",
 		options: [
-			{ id: "conflict", text: "We have frequent arguments and conflicts", weight: { CBT: 2, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 4 } },
-			{ id: "communication", text: "We struggle to communicate effectively", weight: { CBT: 2, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 4 } },
-			{ id: "distance", text: "We feel emotionally distant from each other", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 4 } },
-			{ id: "good", text: "Our relationship is generally good", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 1 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 0, EMDR: 1, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 0, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "therapy_goals",
-		question: "What is your primary goal for therapy?",
+		id: "q11_paralysed_what_if",
+		question: "Do you sometimes feel paralysed by “what if” thinking?",
 		options: [
-			{ id: "symptoms", text: "Reduce specific symptoms (anxiety, depression, etc.)", weight: { CBT: 4, Counselling: 3, EMDR: 3, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "understanding", text: "Better understand myself and my patterns", weight: { CBT: 3, Counselling: 4, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "relationship", text: "Improve my relationship with my partner", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 4 } },
-			{ id: "change", text: "Make lasting behavioral changes", weight: { CBT: 4, Counselling: 2, EMDR: 2, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "past_therapy",
-		question: "What was your experience with previous therapy?",
+		id: "q12_guided_relaxation_hypnosis_ok",
+		question: "Would guided relaxation or hypnosis feel comfortable to you?",
 		options: [
-			{ id: "helpful_cbt", text: "CBT was helpful but I need more", weight: { CBT: 4, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "helpful_talk", text: "Talk therapy was helpful but I need more", weight: { CBT: 2, Counselling: 4, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "not_helpful", text: "Previous therapy wasn't very helpful", weight: { CBT: 2, Counselling: 2, EMDR: 3, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "none", text: "I haven't had therapy before", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 1, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 3: Habits & Behaviour Change (Hypnotherapy)
+	{
+		id: "q13_change_habit",
+		question: "Do you want to change a habit such as smoking, overeating, or nail biting?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 0, EMDR: 0, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "stress_triggers",
-		question: "What typically triggers your stress or difficult emotions?",
+		id: "q14_tried_change_slipped_back",
+		question: "Have you tried to change habits before but slipped back into old patterns?",
 		options: [
-			{ id: "thoughts", text: "My own thoughts and worries", weight: { CBT: 4, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "relationships", text: "Relationship conflicts or misunderstandings", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 4 } },
-			{ id: "memories", text: "Past memories or traumatic events", weight: { CBT: 2, Counselling: 3, EMDR: 4, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "situations", text: "Specific situations or environments", weight: { CBT: 3, Counselling: 2, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "emotional_regulation",
-		question: "How do you typically handle intense emotions?",
+		id: "q15_willpower_not_enough",
+		question: "Do you feel your willpower isn’t always enough on its own?",
 		options: [
-			{ id: "suppress", text: "I try to suppress or control them", weight: { CBT: 4, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "express", text: "I express them openly to others", weight: { CBT: 2, Counselling: 4, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "avoid", text: "I try to avoid feeling them", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "overwhelmed", text: "I get overwhelmed and can't function", weight: { CBT: 3, Counselling: 4, EMDR: 3, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 1, EMDR: 0, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "social_support",
-		question: "How comfortable are you with group or social settings?",
+		id: "q16_like_reset_automatic",
+		question: "Do you like the idea of “resetting” your automatic behaviours?",
 		options: [
-			{ id: "very_uncomfortable", text: "Very uncomfortable - I avoid social situations", weight: { CBT: 4, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "somewhat_uncomfortable", text: "Somewhat uncomfortable but I can manage", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "comfortable", text: "Generally comfortable in social settings", weight: { CBT: 2, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "very_comfortable", text: "Very comfortable - I'm quite social", weight: { CBT: 2, Counselling: 3, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 0, EMDR: 0, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
-		id: "change_readiness",
-		question: "How ready do you feel to make changes in your life?",
+		id: "q17_subconscious_not_just_logic",
+		question: "Would it help to work with your subconscious mind rather than just logic?",
 		options: [
-			{ id: "very_ready", text: "Very ready - I'm motivated and committed", weight: { CBT: 4, Counselling: 3, EMDR: 3, Hypnotherapy: 4, "Couples Counselling": 0 } },
-			{ id: "somewhat_ready", text: "Somewhat ready - I want change but feel uncertain", weight: { CBT: 3, Counselling: 3, EMDR: 2, Hypnotherapy: 3, "Couples Counselling": 0 } },
-			{ id: "not_ready", text: "Not very ready - I'm still figuring things out", weight: { CBT: 2, Counselling: 4, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "resistant", text: "I'm resistant to change - I want to understand first", weight: { CBT: 2, Counselling: 4, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 1, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 4: Exploring Feelings & Relationships (Counselling)
+	{
+		id: "q18_weighed_down_sadness",
+		question: "Do you sometimes feel weighed down by sadness or unresolved issues?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q19_want_safe_space",
+		question: "Do you want a safe, non-judgemental space to talk things through?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 4, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q20_feel_misunderstood",
+		question: "Do you often feel misunderstood by those close to you?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q21_explore_reactions_relationships",
+		question: "Do you want to explore why you react the way you do in relationships?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 4, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q22_make_sense_talking",
+		question: "Do you find it easier to make sense of things when you talk them out loud?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q23_value_long_term_support",
+		question: "Would you value long-term emotional support rather than quick fixes?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 4, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 1, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 5: Trauma & Past Experiences (EMDR/Counselling)
+	{
+		id: "q24_experienced_trauma_affects",
+		question: "Have you experienced a difficult or traumatic event that still affects you?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 2, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q25_memories_feel_recent",
+		question: "Do painful memories sometimes come back as if they only happened yesterday?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q26_triggers_sights_sounds_smells",
+		question: "Do certain sights, sounds, or smells trigger distressing feelings?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q27_nightmares_flashbacks",
+		question: "Do you have nightmares or flashbacks about past experiences?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q28_reduce_emotional_charge",
+		question: "Do you want to reduce the “emotional charge” around old memories?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 2, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q29_prefer_not_talk_detail",
+		question: "Would you prefer a therapy that doesn’t require you to talk in detail about trauma?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 6: Coping Tools & Structure (CBT)
+	{
+		id: "q30_like_practical_strategies_daily",
+		question: "Do you like the idea of learning practical strategies to use every day?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q31_enjoy_structured_sessions",
+		question: "Do you enjoy structured sessions with steps, goals, or homework?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q32_spot_change_unhelpful_thinking",
+		question: "Do you want to spot and change unhelpful thinking patterns?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q33_like_coaching_clear_results",
+		question: "Would you like therapy to feel more like coaching with clear results?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q34_focus_present_future",
+		question: "Do you prefer focusing on the present and future rather than the past?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	// Section 7: Personal Preferences & Style
+	{
+		id: "q35_prefer_relaxed_guided",
+		question: "Do you prefer a relaxed, guided style of therapy (e.g., hypnosis, deep relaxation)?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 2, EMDR: 1, Hypnotherapy: 4, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q36_prefer_structured_problem_solving",
+		question: "Do you prefer a structured, problem-solving style (worksheets, strategies)?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q37_prefer_open_conversation",
+		question: "Do you prefer open conversation where you set the pace?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 2, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q38_talking_doing_mix",
+		question: "Do you want therapy that’s mainly talking, mainly doing, or a mix of both?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q39_short_term_or_long_term",
+		question: "Do you want short-term focused help, or longer-term support?",
+		options: [
+			{ id: "yes", text: "Yes (short-term)", weight: { CBT: 3, Counselling: 0, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe / not sure", weight: { CBT: 1, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No (prefer longer-term)", weight: { CBT: 0, Counselling: 3, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+		],
+	},
+	{
+		id: "q40_combine_approaches",
+		question: "Do you believe combining approaches (e.g., hypnotherapy + CBT, counselling + EMDR) could work best for you?",
+		options: [
+			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 2, EMDR: 2, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 ];
