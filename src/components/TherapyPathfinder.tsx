@@ -213,7 +213,7 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen p-4">
         {/* Top Logo */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-10">
           <div 
             className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
             onClick={() => window.location.reload()}
@@ -291,7 +291,7 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen p-4">
         {/* Top Logo */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-10">
           <div 
             className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
             onClick={() => window.location.reload()}
@@ -388,7 +388,7 @@ export default function TherapyPathfinder() {
             <Button 
               onClick={() => setCurrentStep('questions')}
               disabled={selectedProblems.length === 0}
-                className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
+                className="bg-primary hover:bg-primary/90 text-white px-10 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:transform-none mb-12"
             >
               Continue to Questions
               <ArrowRight className="ml-2 w-5 h-5" />
@@ -413,7 +413,7 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen p-4">
         {/* Top Logo */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-10">
           <div 
             className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
             onClick={() => window.location.reload()}
@@ -508,7 +508,7 @@ export default function TherapyPathfinder() {
     return (
       <div className="min-h-screen p-4">
         {/* Top Logo */}
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 z-10">
           <div 
             className="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg cursor-pointer hover:scale-110 transition-all duration-200"
             onClick={() => window.location.reload()}

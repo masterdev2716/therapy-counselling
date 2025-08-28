@@ -118,7 +118,7 @@ All colors MUST be HSL.
   body {
     @apply bg-background text-foreground;
     background-image: 
-      linear-gradient(hsl(var(--background) / 0.6), hsl(var(--background) / 0.6)), 
+      linear-gradient(hsl(var(--background) / 0.35), hsl(var(--background) / 0.35)), 
       url('./assets/background.png');
     background-size: cover;
     background-position: center;
