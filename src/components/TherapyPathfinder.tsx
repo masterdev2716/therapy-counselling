@@ -519,18 +519,6 @@ export default function TherapyPathfinder() {
         
         <div className="max-w-3xl mx-auto pt-24">
           <div className="text-center mb-12">
-            <div className="w-20 h-20 bg-gradient-to-r from-primary to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6 relative group animate-pulse">
-              <CheckCircle 
-                className="w-10 h-10 text-white cursor-pointer hover:scale-110 transition-all duration-200 hover:rotate-12" 
-                onClick={() => window.location.reload()}
-              />
-              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-1 rounded-full font-bold animate-pulse">
-                ↻
-              </div>
-              <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-black/80 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                Click to restart
-              </div>
-            </div>
             <h2 className="text-4xl font-bold text-foreground mb-4">
               Your Perfect Therapy Match
             </h2>
