@@ -164,45 +164,45 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		id: "q01_general_not_working",
 		question: "Do you feel something in your life isn’t working right now, and you’re not sure how to fix it?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — this is a current concern and I want help", weight: { CBT: 2, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — it affects me at times but not constantly", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — this doesn’t feel like an issue for me right now", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
 		id: "q02_feel_stuck_patterns",
 		question: "Do you sometimes feel “stuck” in repeating the same patterns?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — I often feel stuck in repeating patterns", weight: { CBT: 3, Counselling: 3, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — I notice this occasionally or in certain areas", weight: { CBT: 2, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — I don’t feel stuck in patterns", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
 		id: "q03_more_control_thoughts_emotions",
 		question: "Do you wish you had more control over your thoughts or emotions?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — I frequently want more control over thoughts/emotions", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — it comes up at times, not always", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — I generally feel in control", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
 		id: "q04_confidence_dipped",
 		question: "Have you noticed your confidence has dipped in recent months?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 3, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — I’ve clearly noticed a drop in confidence recently", weight: { CBT: 2, Counselling: 3, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — some ups and downs with confidence", weight: { CBT: 1, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — I haven’t noticed a dip", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
 		id: "q05_avoid_due_to_worry",
 		question: "Do you find yourself avoiding situations because of worry or stress?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — I regularly avoid things due to worry/stress", weight: { CBT: 3, Counselling: 2, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — I occasionally avoid certain things", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — I don’t avoid situations because of worry", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
@@ -219,18 +219,18 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		id: "q07_racing_thoughts_night",
 		question: "Do racing thoughts keep you awake at night?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — this regularly disrupts my sleep", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — it happens occasionally", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — this doesn’t affect my sleep", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
 		id: "q08_replay_events_mind",
 		question: "Do you replay conversations or events over and over in your mind?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "yes", text: "Yes — this happens a lot and is hard to switch off", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes — I dwell on things now and then", weight: { CBT: 2, Counselling: 1, EMDR: 1, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "no", text: "No — I generally move on from events", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
 	{
@@ -256,7 +256,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you sometimes feel paralysed by “what if” thinking?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 1, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -293,7 +293,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you feel your willpower isn’t always enough on its own?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 1, EMDR: 0, Hypnotherapy: 4, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -321,7 +321,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you sometimes feel weighed down by sadness or unresolved issues?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 1, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -339,7 +339,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you often feel misunderstood by those close to you?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -357,7 +357,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you find it easier to make sense of things when you talk them out loud?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 1, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 2, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -385,7 +385,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do painful memories sometimes come back as if they only happened yesterday?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -394,7 +394,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do certain sights, sounds, or smells trigger distressing feelings?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -403,7 +403,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you have nightmares or flashbacks about past experiences?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 0, Counselling: 1, EMDR: 4, Hypnotherapy: 0, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 0, Counselling: 1, EMDR: 2, Hypnotherapy: 0, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -467,7 +467,7 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		question: "Do you prefer focusing on the present and future rather than the past?",
 		options: [
 			{ id: "yes", text: "Yes", weight: { CBT: 4, Counselling: 1, EMDR: 0, Hypnotherapy: 2, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "maybe", text: "Sometimes", weight: { CBT: 2, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
 			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 2, EMDR: 1, Hypnotherapy: 0, "Couples Counselling": 0 } },
 		],
 	},
@@ -503,9 +503,9 @@ export const assessmentQuestions: AssessmentQuestion[] = [
 		id: "q38_talking_doing_mix",
 		question: "Do you want therapy that’s mainly talking, mainly doing, or a mix of both?",
 		options: [
-			{ id: "yes", text: "Yes", weight: { CBT: 2, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "maybe", text: "Maybe", weight: { CBT: 1, Counselling: 1, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
-			{ id: "no", text: "No", weight: { CBT: 0, Counselling: 0, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "talking", text: "Mostly talking — conversation-led sessions (counselling style)", weight: { CBT: 1, Counselling: 4, EMDR: 0, Hypnotherapy: 0, "Couples Counselling": 0 } },
+			{ id: "doing", text: "Mostly doing — practical tools, strategies, exercises (CBT style)", weight: { CBT: 4, Counselling: 0, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
+			{ id: "mix", text: "A mix of both — balance conversation and practical strategies", weight: { CBT: 2, Counselling: 2, EMDR: 0, Hypnotherapy: 1, "Couples Counselling": 0 } },
 		],
 	},
 	{
