@@ -302,14 +302,14 @@ export default function TherapyPathfinder() {
         
         <div className="max-w-4xl mx-auto pt-24">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-foreground mb-4">
+            <h2 className="text-4xl font-bold text-white mb-4">
               What brings you here today?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
               We're here to help you find the right support. Select all the areas that resonate with you - 
               there's no right or wrong answer. We'll then ask you detailed questions to find your perfect match. 💙
             </p>
-            <div className="flex items:center justify-center space-x-4 mt-6 text-sm text-muted-foreground">
+            <div className="flex items:center justify-center space-x-4 mt-6 text-sm text-white/80">
               <span className="flex items-center">
                 <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
                 Choose multiple options
